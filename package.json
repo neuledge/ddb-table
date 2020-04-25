@@ -1,0 +1,77 @@
+{
+  "name": "ddb-table",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "clean": "rm -rf lib",
+    "build": "npm run build:types && npm run build:js",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "babel src --out-dir lib --extensions \".js,.ts\" --source-maps inline",
+    "lint": "eslint \"src/**\"",
+    "fix": "npm run fix:lint",
+    "fix:lint": "npm run lint -- --fix",
+    "mocha": "TS_NODE_FILES=true mocha -r ts-node/register \"src/**/*.test.ts\" --timeout 10000",
+    "mocha:coverage": "nyc npm run mocha && nyc report --reporter=text-lcov | coveralls",
+    "mocha:build": "mocha lib/**/*.test.js --timeout 10000",
+    "test": "npm run type-check && npm run lint -- --quiet && npm run mocha",
+    "coverage": "npm run type-check && npm run lint -- --quiet && npm run mocha:coverage",
+    "test:build": "npm run mocha:build",
+    "test:commit": "if [[ -z \"$(git status --untracked-files=no --porcelain)\" ]]; then\n  echo \"All filed committed.\"\nelse\n  echo \"Uncommitted changes found. Please Commit them first.\" && exit 1\nfi",
+    "prepare": "npm run clean && npm run build",
+    "prepublishOnly": "npm run test:commit && npm run test:build",
+    "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags"
+  },
+  "author": "Moshe Simantov <me@moshe.io>",
+  "repository": "https://github.com/neuledge/ddb-table",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "files": [
+    "/lib/*"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.5",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/chai": "^4.2.11",
+    "@types/chai-as-promised": "^7.1.2",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.13.2",
+    "@typescript-eslint/eslint-plugin": "^2.29.0",
+    "@typescript-eslint/parser": "^2.29.0",
+    "aws-sdk": "^2.663.0",
+    "babel-plugin-transform-typescript-metadata": "^0.3.0",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "coveralls": "^3.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.1.7",
+    "mocha": "^7.1.1",
+    "nyc": "^15.0.1",
+    "prettier": "^2.0.5",
+    "ts-node": "^8.9.0",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "aws-sdk": "2.x"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*": "eslint"
+  }
+}
