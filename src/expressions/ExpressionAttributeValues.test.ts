@@ -8,9 +8,9 @@ describe('ExpressionAttributeValues', () => {
 
     const foo = { foo: 1 };
 
-    assert.equal(values.set('foo', foo), ':foo');
-    assert.equal(values.set(':foo', foo), ':foo');
-    assert.equal(values.set('bar', 'bar'), ':bar');
+    assert.equal(values.add('foo', foo), ':foo');
+    assert.equal(values.add(':foo', foo), ':foo');
+    assert.equal(values.add('bar', 'bar'), ':bar');
 
     assert.deepEqual(values.serialize(), {
       ':foo': foo,

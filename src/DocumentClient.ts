@@ -21,6 +21,7 @@ export type QueryOutput = DocumentClient.QueryOutput;
 
 export type UpdateItemInput = DocumentClient.UpdateItemInput;
 export type UpdateItemOutput = DocumentClient.UpdateItemOutput;
+export type UpdateExpression = DocumentClient.UpdateExpression;
 
 export type DeleteItemInput = DocumentClient.DeleteItemInput;
 export type DeleteItemOutput = DocumentClient.DeleteItemOutput;
