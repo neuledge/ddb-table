@@ -27,6 +27,25 @@ DocumentClient & TypeScript you can easily fetch and store any JSON document and
 structure statically. Query secondary indexes or run complicated update expressions without a single
 error on runtime.
 
+```ts
+interface MyTable {
+  Id: string;
+  Content: string;
+}
+
+const table = new Table<MyTable, 'Id'>({
+  tableName: 'MyTable',
+  primaryKey: 'Id',
+});
+
+await table
+  .update('someId')
+  .set('Content', 'Foo')
+  // @ts-ignore 'content' is not assignable to 'Id' | 'Content'
+  .condition(cond => cond.eq('content', 'foo'))
+  .exec();
+```
+
 ### Main Features
 
 - **Strongly Typed** - End-to-end TypeScript validation for your data.
@@ -83,8 +102,8 @@ const outboxIndex = messages.index('senderId-timestamp-index', 'senderId', 'time
 
 const queryRes = await outboxIndex
   .query()
-  .keyCondition((names, values) => `${names.add('senderId')} = ${values.add('email', 'john@gmail.com')}`)
-  .keyCondition((names, values) => `${names.add('timestamp')} > ${values.add('timestamp', Date.now() - 3600e3)}`)
+  .keyCondition(cond => cond.eq('senderId', 'john@gmail.com'))
+  .keyCondition(cond => cond.between('timestamp', Date.now() - 3600e3, Date.now()))
   .project({ threadId: 1, message: 1 })
   .reverseIndex()
   .exec();
