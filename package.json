@@ -1,8 +1,8 @@
 {
   "name": "ddb-table",
-  "version": "0.0.0",
-  "description": "",
-  "keywords": [],
+  "version": "0.1.0",
+  "description": "Strongly typed library for querying and modeling DynamoDB documents.",
+  "keywords": ["DynamoDB", "DDB", "TypeScript", "Strongly-Typed", "query", "update", "scan", "DocumentClient"],
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
