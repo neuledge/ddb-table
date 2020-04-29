@@ -1,5 +1,8 @@
-import GetQuery from './GetQuery';
 import PutQuery from './PutQuery';
+import GetQuery from './GetQuery';
+import ScanQuery from './ScanQuery';
+import QueryQuery from './QueryQuery';
 import UpdateQuery from './UpdateQuery';
+import DeleteQuery from './DeleteQuery';
 
-export { GetQuery, PutQuery, UpdateQuery };
+export { PutQuery, GetQuery, ScanQuery, QueryQuery, UpdateQuery, DeleteQuery };

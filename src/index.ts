@@ -1,4 +1,7 @@
-import DDBTable from './DDBTable';
-export * from './expressions';
+import Table from './Table';
+import TableIndex from './TableIndex';
 
-export default DDBTable;
+export default Table;
+export { TableIndex };
+export * from './expressions';
+export * from './queries';

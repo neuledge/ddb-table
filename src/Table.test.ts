@@ -1,7 +1,8 @@
 import 'mocha';
 import { assert } from 'chai';
-import DDBTable, { TableKey } from './DDBTable';
+import Table from './Table';
 import { GetQuery } from './queries';
+import { TableKey } from './TableIndex';
 
 interface DemoItem {
   Id: string;
@@ -14,20 +15,9 @@ interface DemoItem {
   hidden: boolean;
 }
 
-describe('DDBTable', () => {
-  it('TableKey type', () => {
-    assert.ok<TableKey<DemoItem, 'Id'>>({
-      Id: 'foo',
-    });
-
-    assert.ok<TableKey<DemoItem, 'Id', 'Ver'>>({
-      Id: 'foo',
-      Ver: 1,
-    });
-  });
-
+describe('Table', () => {
   it('project(fields) type', () => {
-    const table = new DDBTable<DemoItem, 'Id', 'Ver'>({
+    const table = new Table<DemoItem, 'Id', 'Ver'>({
       tableName: 'MyTable',
       primaryKey: 'Id',
       sortKey: 'Ver',
@@ -46,7 +36,7 @@ describe('DDBTable', () => {
   });
 
   it('project(fields) query', () => {
-    const table = new DDBTable<DemoItem, 'Id', 'Ver'>({
+    const table = new Table<DemoItem, 'Id', 'Ver'>({
       tableName: 'MyTable',
       primaryKey: 'Id',
       sortKey: 'Ver',
@@ -66,7 +56,7 @@ describe('DDBTable', () => {
   });
 
   it('Basic Usage', () => {
-    const table = new DDBTable<DemoItem, 'Id', 'Ver'>({
+    const table = new Table<DemoItem, 'Id', 'Ver'>({
       tableName: 'MyTable',
       primaryKey: 'Id',
       sortKey: 'Ver',
