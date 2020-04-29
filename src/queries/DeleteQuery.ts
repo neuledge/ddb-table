@@ -1,28 +1,26 @@
 import DocumentClient, {
+  DeleteItemInput,
+  DeleteItemOutput,
   Item,
-  PutItemInput,
-  PutItemOutput,
 } from '../DocumentClient';
 import Query, { QueryRequest } from './Query';
 import { ConditionExpression, ExpressionAttributeValues } from '../expressions';
 import { ConditionGenerator } from '../expressions/ConditionExpression';
 
-type QueryInput<T> = Omit<PutItemInput, 'Item'> & { Item: T };
-type QueryOutput<T> = Omit<PutItemOutput, 'Attributes'> & {
-  Attributes?: T;
-};
+type QueryInput<K> = Omit<DeleteItemInput, 'Key'> & { Key: K };
+type QueryOutput<T> = Omit<DeleteItemOutput, 'Attributes'> & { Attributes?: T };
 
-export default class PutQuery<T extends Item> extends Query<
+export default class DeleteQuery<T extends K, K extends Item> extends Query<
   T,
-  QueryInput<T>,
+  QueryInput<K>,
   QueryOutput<T>
 > {
   private values!: ExpressionAttributeValues;
   private conditions!: ConditionExpression<T>;
 
-  public constructor(client: DocumentClient, params: QueryInput<T>) {
+  public constructor(client: DocumentClient, params: QueryInput<K>) {
     super(
-      client.put.bind(client) as QueryRequest<QueryInput<T>, QueryOutput<T>>,
+      client.delete.bind(client) as QueryRequest<QueryInput<K>, QueryOutput<T>>,
       params,
     );
   }
@@ -42,7 +40,7 @@ export default class PutQuery<T extends Item> extends Query<
   }
 
   protected syncInput(): void {
-    super.syncInput();
+    super.handleInputUpdated();
 
     this.input.ExpressionAttributeValues = this.values.serialize();
     this.input.ConditionExpression = this.conditions.serialize();
@@ -50,11 +48,6 @@ export default class PutQuery<T extends Item> extends Query<
 
   public condition(fn: ConditionGenerator<T>): this {
     this.conditions.and(fn);
-    return this;
-  }
-
-  public return(values: 'ALL_OLD' | 'NONE'): this {
-    this.input.ReturnValues = values;
     return this;
   }
 }

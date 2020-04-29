@@ -6,7 +6,6 @@ import DocumentClient, {
 import Query, { QueryRequest } from './Query';
 import {
   ConditionExpression,
-  ExpressionAttributeNames,
   ExpressionAttributeValues,
   UpdateExpression,
 } from '../expressions';
@@ -19,10 +18,10 @@ type QueryOutput<T> = Omit<UpdateItemOutput, 'Attributes'> & {
 };
 
 export default class UpdateQuery<T extends K, K extends Item> extends Query<
+  T,
   QueryInput<K>,
   QueryOutput<T>
 > {
-  private names!: ExpressionAttributeNames<T>;
   private values!: ExpressionAttributeValues;
   private conditions!: ConditionExpression<T>;
   private update!: UpdateExpression<T>;
@@ -34,33 +33,32 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
     );
   }
 
-  protected handleParamsUpdated(): void {
-    this.names = new ExpressionAttributeNames(
-      this.params.ExpressionAttributeNames,
-    );
+  protected handleInputUpdated(): void {
+    super.handleInputUpdated();
 
     this.values = new ExpressionAttributeValues(
-      this.params.ExpressionAttributeValues,
+      this.input.ExpressionAttributeValues,
     );
 
     this.conditions = new ConditionExpression(
       this.names,
       this.values,
-      this.params.ConditionExpression,
+      this.input.ConditionExpression,
     );
 
     this.update = new UpdateExpression(
       this.names,
       this.values,
-      this.params.UpdateExpression,
+      this.input.UpdateExpression,
     );
   }
 
-  protected updateParams(): void {
-    this.params.ExpressionAttributeNames = this.names.serialize();
-    this.params.ExpressionAttributeValues = this.values.serialize();
-    this.params.ConditionExpression = this.conditions.serialize();
-    this.params.UpdateExpression = this.update.serialize();
+  protected syncInput(): void {
+    super.syncInput();
+
+    this.input.ExpressionAttributeValues = this.values.serialize();
+    this.input.ConditionExpression = this.conditions.serialize();
+    this.input.UpdateExpression = this.update.serialize();
   }
 
   public condition(fn: ConditionGenerator<T>): this {
@@ -153,7 +151,7 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
   public return(
     values: 'ALL_OLD' | 'ALL_NEW' | 'UPDATED_OLD' | 'UPDATED_NEW' | 'NONE',
   ): this {
-    this.params.ReturnValues = values;
+    this.input.ReturnValues = values;
     return this;
   }
 }

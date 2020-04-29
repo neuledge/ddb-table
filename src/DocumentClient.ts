@@ -2,6 +2,7 @@ import AWS from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/lib/dynamodb/document_client';
 
 export type Item = DocumentClient.PutItemInputAttributeMap;
+export type Key = DocumentClient.Key;
 
 export type AttributeName = DocumentClient.AttributeName;
 export type ExpressionAttributeNameMap = DocumentClient.ExpressionAttributeNameMap;

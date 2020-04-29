@@ -9,6 +9,9 @@ import {
   ExpressionAttributeValues,
 } from './expressions';
 import { GetQuery, PutQuery, UpdateQuery } from './queries';
+import ScanQuery from './queries/ScanQuery';
+import DeleteQuery from './queries/DeleteQuery';
+import QueryQuery from './queries/QueryQuery';
 
 export interface TableOptions<P, S> {
   tableName: string;
@@ -82,10 +85,31 @@ export default class DDBTable<
     });
   }
 
+  public scan(): ScanQuery<T, TableKey<T, P, S>> {
+    return new ScanQuery(this.client, {
+      TableName: this.name,
+    });
+  }
+
+  public query(): QueryQuery<T, TableKey<T, P, S>> {
+    return new QueryQuery(this.client, {
+      TableName: this.name,
+    });
+  }
+
   public update(
     ...args: TableKeyArgs<T, P, S>
   ): UpdateQuery<T, TableKey<T, P, S>> {
     return new UpdateQuery(this.client, {
+      TableName: this.name,
+      Key: this.key(...args),
+    });
+  }
+
+  public delete(
+    ...args: TableKeyArgs<T, P, S>
+  ): DeleteQuery<T, TableKey<T, P, S>> {
+    return new DeleteQuery(this.client, {
       TableName: this.name,
       Key: this.key(...args),
     });

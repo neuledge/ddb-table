@@ -1,41 +1,67 @@
-import { AWSRequest } from '../DocumentClient';
+import {
+  AWSRequest,
+  DeleteItemInput,
+  GetItemInput,
+  Item,
+  PutItemInput,
+  QueryInput,
+  ScanInput,
+  UpdateItemInput,
+} from '../DocumentClient';
+import { ExpressionAttributeNames } from '../expressions';
 
 export type QueryRequest<I, O> = (params: I) => AWSRequest<O>;
 
-export default class Query<T, O> {
-  protected readonly params: T;
-  private readonly request: QueryRequest<T, O>;
+type Inputs =
+  | PutItemInput
+  | GetItemInput
+  | ScanInput
+  | QueryInput
+  | UpdateItemInput
+  | DeleteItemInput;
 
-  protected constructor(request: QueryRequest<T, O>, params: T) {
-    this.params = params;
+export default class Query<T extends Item, I extends Inputs, O> {
+  protected readonly input: I;
+  private readonly request: QueryRequest<I, O>;
+  protected names!: ExpressionAttributeNames<T>;
+
+  protected constructor(request: QueryRequest<I, O>, params: I) {
+    this.input = params;
     this.request = request;
 
-    this.handleParamsUpdated();
+    this.handleInputUpdated();
   }
 
-  protected handleParamsUpdated(): void {
-    // nothing to do
+  protected handleInputUpdated(): void {
+    this.names = new ExpressionAttributeNames(
+      this.input.ExpressionAttributeNames,
+    );
   }
 
-  protected updateParams(): void {
-    // nothing to do
+  protected syncInput(): void {
+    this.input.ExpressionAttributeNames = this.names.serialize();
   }
 
-  public extend(params: T): this {
-    Object.assign(this.params, params);
-    this.handleParamsUpdated();
+  public calcCapacity(mode: 'INDEXES' | 'TOTAL' | 'NONE'): this {
+    this.input.ReturnConsumedCapacity = mode;
+    return this;
+  }
+
+  public extend(input: I): this {
+    Object.assign(this.input, input);
+    this.handleInputUpdated();
 
     return this;
   }
 
-  public serialize(): T {
-    this.updateParams();
+  public serialize(): I {
+    this.syncInput();
 
-    return this.params;
+    return this.input;
   }
 
-  public requestOnly(): ReturnType<QueryRequest<T, O>> {
-    return this.request(this.params);
+  public requestOnly(): ReturnType<QueryRequest<I, O>> {
+    return this.request(this.input);
   }
 
   public exec(): Promise<O> {

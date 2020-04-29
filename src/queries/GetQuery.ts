@@ -4,7 +4,7 @@ import DocumentClient, {
   Item,
 } from '../DocumentClient';
 import Query, { QueryRequest } from './Query';
-import { ExpressionAttributeNames, ProjectionExpression } from '../expressions';
+import { ProjectionExpression } from '../expressions';
 import {
   ItemProjection,
   ProjectionFields,
@@ -14,10 +14,10 @@ type QueryInput<K> = Omit<GetItemInput, 'Key'> & { Key: K };
 type QueryOutput<T> = Omit<GetItemOutput, 'Item'> & { Item?: T };
 
 export default class GetQuery<T extends K, K extends Item> extends Query<
+  T,
   QueryInput<K>,
   QueryOutput<T>
 > {
-  private names!: ExpressionAttributeNames<T>;
   private projection!: ProjectionExpression<T, K>;
 
   public constructor(client: DocumentClient, params: QueryInput<K>) {
@@ -27,20 +27,19 @@ export default class GetQuery<T extends K, K extends Item> extends Query<
     );
   }
 
-  protected handleParamsUpdated(): void {
-    this.names = new ExpressionAttributeNames<T>(
-      this.params.ExpressionAttributeNames,
-    );
+  protected handleInputUpdated(): void {
+    super.handleInputUpdated();
 
     this.projection = new ProjectionExpression(
       this.names,
-      this.params.ProjectionExpression,
+      this.input.ProjectionExpression,
     );
   }
 
-  protected updateParams(): void {
-    this.params.ExpressionAttributeNames = this.names.serialize();
-    this.params.ProjectionExpression = this.projection.serialize();
+  protected syncInput(): void {
+    super.syncInput();
+
+    this.input.ProjectionExpression = this.projection.serialize();
   }
 
   // public attributeNames(): ExpressionAttributeNames<T> {
