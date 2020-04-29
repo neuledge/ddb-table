@@ -9,7 +9,7 @@ import {
   ExpressionAttributeValues,
   UpdateExpression,
 } from '../expressions';
-import { SetValue } from '../expressions/UpdateExpression';
+import { AddDeleteValue, SetValue } from '../expressions/UpdateExpression';
 import { ConditionGenerator } from '../expressions/ConditionExpression';
 
 type QueryInput<K> = Omit<UpdateItemInput, 'Key'> & { Key: K };
@@ -145,6 +145,187 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
     value: SetValue<T, unknown>,
   ): this {
     this.update.set(path as [K1, K2, K3, K4, K5, K6, K7, K8], value);
+    return this;
+  }
+
+  public remove<
+    K1 extends keyof T,
+    K2 extends keyof T[K1],
+    K3 extends keyof T[K1][K2],
+    K4 extends keyof T[K1][K2][K3],
+    K5 extends keyof T[K1][K2][K3][K4],
+    K6 extends keyof T[K1][K2][K3][K4][K5],
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+  >(
+    ...path: [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]]
+  ): this {
+    this.update.remove(...path);
+
+    return this;
+  }
+
+  public add<K1 extends keyof T>(
+    path: K1 | [K1],
+    value: AddDeleteValue<T[K1]>,
+  ): this;
+  public add<K1 extends keyof T, K2 extends keyof T[K1]>(
+    path: [K1, K2],
+    value: AddDeleteValue<T[K1][K2]>,
+  ): this;
+  public add<
+    K1 extends keyof T,
+    K2 extends keyof T[K1],
+    K3 extends keyof T[K1][K2]
+  >(path: [K1, K2, K3], value: AddDeleteValue<T[K1][K2][K3]>): this;
+  public add<
+    K1 extends keyof T,
+    K2 extends keyof T[K1],
+    K3 extends keyof T[K1][K2],
+    K4 extends keyof T[K1][K2][K3]
+  >(path: [K1, K2, K3, K4], value: AddDeleteValue<T[K1][K2][K3][K4]>): this;
+  public add<
+    K1 extends keyof T,
+    K2 extends keyof T[K1],
+    K3 extends keyof T[K1][K2],
+    K4 extends keyof T[K1][K2][K3],
+    K5 extends keyof T[K1][K2][K3][K4]
+  >(
+    path: [K1, K2, K3, K4, K5],
+    value: AddDeleteValue<T[K1][K2][K3][K4][K5]>,
+  ): this;
+  public add<
+    K1 extends keyof T,
+    K2 extends keyof T[K1],
+    K3 extends keyof T[K1][K2],
+    K4 extends keyof T[K1][K2][K3],
+    K5 extends keyof T[K1][K2][K3][K4],
+    K6 extends keyof T[K1][K2][K3][K4][K5]
+  >(
+    path: [K1, K2, K3, K4, K5, K6],
+    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6]>,
+  ): this;
+  public add<
+    K1 extends keyof T,
+    K2 extends keyof T[K1],
+    K3 extends keyof T[K1][K2],
+    K4 extends keyof T[K1][K2][K3],
+    K5 extends keyof T[K1][K2][K3][K4],
+    K6 extends keyof T[K1][K2][K3][K4][K5],
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6]
+  >(
+    path: [K1, K2, K3, K4, K5, K6, K7],
+    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6][K7]>,
+  ): this;
+  public add<
+    K1 extends keyof T,
+    K2 extends keyof T[K1],
+    K3 extends keyof T[K1][K2],
+    K4 extends keyof T[K1][K2][K3],
+    K5 extends keyof T[K1][K2][K3][K4],
+    K6 extends keyof T[K1][K2][K3][K4][K5],
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+  >(
+    path: [K1, K2, K3, K4, K5, K6, K7, K8],
+    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6][K7][K8]>,
+  ): this;
+  public add<
+    K1 extends keyof T,
+    K2 extends keyof T[K1],
+    K3 extends keyof T[K1][K2],
+    K4 extends keyof T[K1][K2][K3],
+    K5 extends keyof T[K1][K2][K3][K4],
+    K6 extends keyof T[K1][K2][K3][K4][K5],
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+  >(
+    path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
+    value: unknown,
+  ): this {
+    this.update.add(path as [K1, K2, K3, K4, K5, K6, K7, K8], value);
+    return this;
+  }
+
+  public delete<K1 extends keyof T>(
+    path: K1 | [K1],
+    value: AddDeleteValue<T[K1]>,
+  ): this;
+  public delete<K1 extends keyof T, K2 extends keyof T[K1]>(
+    path: [K1, K2],
+    value: AddDeleteValue<T[K1][K2]>,
+  ): this;
+  public delete<
+    K1 extends keyof T,
+    K2 extends keyof T[K1],
+    K3 extends keyof T[K1][K2]
+  >(path: [K1, K2, K3], value: AddDeleteValue<T[K1][K2][K3]>): this;
+  public delete<
+    K1 extends keyof T,
+    K2 extends keyof T[K1],
+    K3 extends keyof T[K1][K2],
+    K4 extends keyof T[K1][K2][K3]
+  >(path: [K1, K2, K3, K4], value: AddDeleteValue<T[K1][K2][K3][K4]>): this;
+  public delete<
+    K1 extends keyof T,
+    K2 extends keyof T[K1],
+    K3 extends keyof T[K1][K2],
+    K4 extends keyof T[K1][K2][K3],
+    K5 extends keyof T[K1][K2][K3][K4]
+  >(
+    path: [K1, K2, K3, K4, K5],
+    value: AddDeleteValue<T[K1][K2][K3][K4][K5]>,
+  ): this;
+  public delete<
+    K1 extends keyof T,
+    K2 extends keyof T[K1],
+    K3 extends keyof T[K1][K2],
+    K4 extends keyof T[K1][K2][K3],
+    K5 extends keyof T[K1][K2][K3][K4],
+    K6 extends keyof T[K1][K2][K3][K4][K5]
+  >(
+    path: [K1, K2, K3, K4, K5, K6],
+    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6]>,
+  ): this;
+  public delete<
+    K1 extends keyof T,
+    K2 extends keyof T[K1],
+    K3 extends keyof T[K1][K2],
+    K4 extends keyof T[K1][K2][K3],
+    K5 extends keyof T[K1][K2][K3][K4],
+    K6 extends keyof T[K1][K2][K3][K4][K5],
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6]
+  >(
+    path: [K1, K2, K3, K4, K5, K6, K7],
+    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6][K7]>,
+  ): this;
+  public delete<
+    K1 extends keyof T,
+    K2 extends keyof T[K1],
+    K3 extends keyof T[K1][K2],
+    K4 extends keyof T[K1][K2][K3],
+    K5 extends keyof T[K1][K2][K3][K4],
+    K6 extends keyof T[K1][K2][K3][K4][K5],
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+  >(
+    path: [K1, K2, K3, K4, K5, K6, K7, K8],
+    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6][K7][K8]>,
+  ): this;
+  public delete<
+    K1 extends keyof T,
+    K2 extends keyof T[K1],
+    K3 extends keyof T[K1][K2],
+    K4 extends keyof T[K1][K2][K3],
+    K5 extends keyof T[K1][K2][K3][K4],
+    K6 extends keyof T[K1][K2][K3][K4][K5],
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+  >(
+    path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
+    value: unknown,
+  ): this {
+    this.update.delete(path as [K1, K2, K3, K4, K5, K6, K7, K8], value);
     return this;
   }
 

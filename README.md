@@ -69,10 +69,19 @@ const messages = new Table<MessageSchema, 'threadId', 'timestamp'>({
   sortKey: 'timestamp',
 });
 
+const updateRes = await messages
+  .update('john@gmail.com', 1588191225322)
+  .set('message', 'Hello World!')
+  .set(['attachments', 1, 'name'], 'Profile Image')
+  .return('ALL_NEW')
+  .exec(); 
+
+console.log(res.Attributes);
+
 // use the outbox secondary index
 const outboxIndex = messages.index('senderId-timestamp-index', 'senderId', 'timestamp');
 
-const res = await outboxIndex
+const queryRes = await outboxIndex
   .query()
   .keyCondition((names, values) => `${names.add('senderId')} = ${values.add('john@gmail.com')}`)
   .keyCondition((names, values) => `${names.add('timestamp')} > ${values.add(Date.now() - 3600e3)}`)
