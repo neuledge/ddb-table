@@ -49,7 +49,7 @@ export default class QueryQuery<T extends K, K extends Item> extends ItemsQuery<
     this.input.KeyConditionExpression = this.keyConditions.serialize();
   }
 
-  public reverse(flag = true): this {
+  public reverseIndex(flag = true): this {
     this.input.ScanIndexForward = !flag;
 
     return this;
