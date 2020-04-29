@@ -83,8 +83,8 @@ const outboxIndex = messages.index('senderId-timestamp-index', 'senderId', 'time
 
 const queryRes = await outboxIndex
   .query()
-  .keyCondition((names, values) => `${names.add('senderId')} = ${values.add('john@gmail.com')}`)
-  .keyCondition((names, values) => `${names.add('timestamp')} > ${values.add(Date.now() - 3600e3)}`)
+  .keyCondition((names, values) => `${names.add('senderId')} = ${values.add('email', 'john@gmail.com')}`)
+  .keyCondition((names, values) => `${names.add('timestamp')} > ${values.add('timestamp', Date.now() - 3600e3)}`)
   .project({ threadId: 1, message: 1 })
   .reverseIndex()
   .exec();
