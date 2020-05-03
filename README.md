@@ -31,7 +31,7 @@ error on runtime.
 await table
   .update('demo@example.com')
   .set('FullName', 'John Doe')
-  // @ts-ignore 'fullName' is not assignable to 'Email' | 'FullName'
+  // TypeScript Error: 'fullName' is not assignable to 'Email' | 'FullName'
   .condition(cond => cond.eq('fullName', 'Johnny Doe'))
   .exec();
 ```
