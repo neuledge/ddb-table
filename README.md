@@ -22,27 +22,17 @@
 </p>
 <br>
 
-**DDB-Table** was built to provide strongly-typed data structures over DynamoDB tables. Using AWS
-DocumentClient & TypeScript you can easily fetch and store any JSON document and validate it’s
-structure statically. Query secondary indexes or run complicated update expressions without a single
+**DDB-Table** was built to provide strongly-typed data structures over DynamoDB tables. Using **AWS
+DocumentClient** & **TypeScript** you can easily fetch and store any JSON document and validate it’s
+structure statically. Query secondary indexes and run complicated update expressions without any
 error on runtime.
 
 ```ts
-interface MyTable {
-  Id: string;
-  Content: string;
-}
-
-const table = new Table<MyTable, 'Id'>({
-  tableName: 'MyTable',
-  primaryKey: 'Id',
-});
-
 await table
-  .update('someId')
-  .set('Content', 'Foo')
+  .update('demo@example.com')
+  .set('FullName', 'John Doe')
   // @ts-ignore 'content' is not assignable to 'Id' | 'Content'
-  .condition(cond => cond.eq('content', 'foo'))
+  .condition(cond => cond.eq('fullName', 'Johnny Doe'))
   .exec();
 ```
 
