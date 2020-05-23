@@ -9,8 +9,8 @@
   <a href="https://travis-ci.org/neuledge/ddb-table">
     <img src="https://travis-ci.org/neuledge/ddb-table.svg?branch=master" alt="Build Status">
   </a>
-  <a href="https://libraries.io/npm/ddb-table/">
-    <img src="https://img.shields.io/librariesio/release/npm/ddb-table" alt="Dependency Status">
+  <a href="https://depfu.com/github/neuledge/ddb-table?project_id=13055">
+    <img src="https://badges.depfu.com/badges/c06bc1e007e8b7f804d8563a56bb2ced/overview.svg" alt="Dependency Status">
   </a>
   <a href="https://coveralls.io/github/neuledge/ddb-table?branch=master">
     <img src="https://coveralls.io/repos/github/neuledge/ddb-table/badge.svg?branch=master"
