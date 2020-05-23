@@ -25,9 +25,9 @@ export default class ScanQuery<T extends K, K extends Item> extends ItemsQuery<
     );
   }
 
-  public project<P extends ProjectionFields<Omit<T, keyof K>>>(
+  public project<P extends ProjectionFields<T>>(
     fields: P,
-  ): this & ScanQuery<ItemProjection<Omit<T, keyof K>, P> & K, K> {
+  ): this & ScanQuery<K & ItemProjection<T, P>, K> {
     return super.project(fields);
   }
 

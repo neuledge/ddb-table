@@ -45,9 +45,7 @@ export default class ItemsQuery<
     this.input.FilterExpression = this.filters.serialize();
   }
 
-  public project<P extends ProjectionFields<Omit<T, keyof K>>>(
-    fields: P,
-  ): this {
+  public project<P extends ProjectionFields<T>>(fields: P): this {
     this.projection.add(fields);
     return this;
   }

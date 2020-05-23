@@ -55,9 +55,9 @@ export default class QueryQuery<T extends K, K extends Item> extends ItemsQuery<
     return this;
   }
 
-  public project<P extends ProjectionFields<Omit<T, keyof K>>>(
+  public project<P extends ProjectionFields<T>>(
     fields: P,
-  ): this & QueryQuery<ItemProjection<Omit<T, keyof K>, P> & K, K> {
+  ): this & QueryQuery<K & ItemProjection<T, P>, K> {
     return super.project(fields);
   }
 

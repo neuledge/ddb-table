@@ -1,13 +1,15 @@
 import ExpressionAttributeNames from './ExpressionAttributeNames';
 
 export type ProjectionFields<T> = {
-  [K in keyof T]?: [T[K]] extends [object]
-    ? ProjectionFields<T[K]> | true | false | 1 | 0
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  [P in keyof T]?: [T[P]] extends [object]
+    ? ProjectionFields<T[P]> | true | false | 1 | 0
     : true | false | 1 | 0;
 };
 
 type ProjectionFieldsKeys<T, P extends ProjectionFields<T>> = Exclude<
   {
+    // eslint-disable-next-line @typescript-eslint/ban-types
     [K in keyof T]: [P[K]] extends [true | 1 | object] ? K : never;
   }[keyof T],
   undefined
@@ -25,6 +27,7 @@ type ProjectionFieldsMaybeKeys<T, P extends ProjectionFields<T>> = Exclude<
 >;
 
 export type ItemProjection<T, P extends ProjectionFields<T>> = {
+  // eslint-disable-next-line @typescript-eslint/ban-types
   [K in ProjectionFieldsKeys<T, P>]: [P[K]] extends [object]
     ? ItemProjection<T[K], P[K]>
     : T[K];
@@ -48,7 +51,10 @@ export default class ProjectionExpression<T extends K, K> {
   }
 
   public add<P extends ProjectionFields<Omit<T, keyof K>>>(fields: P): this {
-    const iterateFields = (path: (string | number)[], fields: {}): void => {
+    const iterateFields = (
+      path: (string | number)[],
+      fields: Record<string, unknown>,
+    ): void => {
       Object.entries(fields).forEach(([key, value]) => {
         if (!value) return;
 
@@ -59,7 +65,7 @@ export default class ProjectionExpression<T extends K, K> {
           return;
         }
 
-        iterateFields(keyPath, value as {});
+        iterateFields(keyPath, value as Record<string, unknown>);
       });
     };
 

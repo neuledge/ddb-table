@@ -18,6 +18,7 @@ export interface TableIndexOptions<H, S> {
   documentClient?: DocumentClient;
 }
 export type TableIndexOptionsArg<H, S> = TableIndexOptions<H, S> &
+  // eslint-disable-next-line @typescript-eslint/ban-types
   ([S] extends [never] ? {} : { sortKey: S });
 
 export type TableKeyArgs<T, H extends keyof T, S extends keyof T = never> = [

@@ -16,6 +16,7 @@ export default class Table<
   S extends keyof T = never
 > extends TableIndex<T, H, S> {
   public constructor(
+    // eslint-disable-next-line @typescript-eslint/ban-types
     opts: TableOptions<H, S> & ([S] extends [never] ? {} : { sortKey: S }),
   ) {
     super(opts);
