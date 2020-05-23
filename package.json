@@ -2,7 +2,16 @@
   "name": "ddb-table",
   "version": "0.2.0",
   "description": "Strongly typed library for querying and modeling DynamoDB documents.",
-  "keywords": ["DynamoDB", "DDB", "TypeScript", "Strongly-Typed", "query", "update", "scan", "DocumentClient"],
+  "keywords": [
+    "DynamoDB",
+    "DDB",
+    "TypeScript",
+    "Strongly-Typed",
+    "query",
+    "update",
+    "scan",
+    "DocumentClient"
+  ],
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
@@ -34,11 +43,11 @@
   ],
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
+    "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
-    "@babel/plugin-proposal-object-rest-spread": "^7.9.5",
-    "@babel/preset-env": "^7.9.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
     "@babel/preset-typescript": "^7.9.0",
     "@types/chai": "^4.2.11",
     "@types/chai-as-promised": "^7.1.2",
