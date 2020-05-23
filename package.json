@@ -52,7 +52,7 @@
     "@types/chai": "^4.2.11",
     "@types/chai-as-promised": "^7.1.2",
     "@types/mocha": "^7.0.2",
-    "@types/node": "^13.13.2",
+    "@types/node": "^13.13.9",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
     "aws-sdk": "^2.663.0",
