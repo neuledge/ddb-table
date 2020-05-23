@@ -31,7 +31,7 @@ error on runtime.
 await table
   .update('demo@example.com')
   .set('FullName', 'John Doe')
-  // TypeScript Error: 'fullName' is not assignable to 'Email' | 'FullName'
+  // 🚨 TypeScript Error: 'fullName' is not assignable to 'Email' | 'FullName'
   .condition(cond => cond.eq('fullName', 'Johnny Doe'))
   .exec();
 ```
@@ -71,7 +71,7 @@ interface MessageSchema {
   }[];
 }
 
-// define the basic table definition
+// create the basic table definition
 const messages = new Table<MessageSchema, 'threadId', 'timestamp'>({
   tableName: 'Messages',
   primaryKey: 'threadId',
@@ -87,7 +87,7 @@ const updateRes = await messages
 
 console.log(res.Attributes);
 
-// use the outbox secondary index
+// create a secondary index definition
 const outboxIndex = messages.index('senderId-timestamp-index', 'senderId', 'timestamp');
 
 const queryRes = await outboxIndex
