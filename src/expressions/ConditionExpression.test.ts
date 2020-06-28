@@ -5,6 +5,96 @@ import ConditionExpression from './ConditionExpression';
 import ExpressionAttributeValues from './ExpressionAttributeValues';
 
 describe('ConditionExpression', () => {
+  describe('.getAttributeTypeString', () => {
+    it('String', () => {
+      assert.equal(ConditionExpression.getAttributeTypeString('S'), 'S');
+      assert.equal(ConditionExpression.getAttributeTypeString(String), 'S');
+
+      // Custom strings throws on type checks but returned as is
+      assert.equal(
+        ConditionExpression.getAttributeTypeString('test' as never),
+        'test',
+      );
+    });
+
+    it('String Set', () => {
+      assert.equal(ConditionExpression.getAttributeTypeString('SS'), 'SS');
+      assert.equal(ConditionExpression.getAttributeTypeString([String]), 'SS');
+
+      assert.throws(() =>
+        ConditionExpression.getAttributeTypeString(['string'] as never),
+      );
+    });
+
+    it('Number', () => {
+      assert.equal(ConditionExpression.getAttributeTypeString('N'), 'N');
+      assert.equal(ConditionExpression.getAttributeTypeString(Number), 'N');
+
+      assert.throws(() =>
+        ConditionExpression.getAttributeTypeString(2 as never),
+      );
+    });
+
+    it('Number Set', () => {
+      assert.equal(ConditionExpression.getAttributeTypeString('NS'), 'NS');
+      assert.equal(ConditionExpression.getAttributeTypeString([Number]), 'NS');
+    });
+
+    it('Binary', () => {
+      assert.equal(ConditionExpression.getAttributeTypeString('B'), 'B');
+      assert.equal(ConditionExpression.getAttributeTypeString(Buffer), 'B');
+      assert.equal(
+        ConditionExpression.getAttributeTypeString(ArrayBuffer),
+        'B',
+      );
+    });
+
+    it('Buffer Set', () => {
+      assert.equal(ConditionExpression.getAttributeTypeString('BS'), 'BS');
+      assert.equal(ConditionExpression.getAttributeTypeString([Buffer]), 'BS');
+      assert.equal(
+        ConditionExpression.getAttributeTypeString([ArrayBuffer]),
+        'BS',
+      );
+    });
+
+    it('Boolean', () => {
+      assert.equal(ConditionExpression.getAttributeTypeString('BOOL'), 'BOOL');
+      assert.equal(ConditionExpression.getAttributeTypeString(Boolean), 'BOOL');
+
+      assert.throws(() =>
+        ConditionExpression.getAttributeTypeString(true as never),
+      );
+    });
+
+    it('Null', () => {
+      assert.equal(ConditionExpression.getAttributeTypeString('NULL'), 'NULL');
+      assert.equal(ConditionExpression.getAttributeTypeString(null), 'NULL');
+
+      assert.throws(() =>
+        ConditionExpression.getAttributeTypeString(undefined as never),
+      );
+    });
+
+    it('List', () => {
+      assert.equal(ConditionExpression.getAttributeTypeString('L'), 'L');
+      assert.equal(ConditionExpression.getAttributeTypeString(Array), 'L');
+
+      assert.throws(() =>
+        ConditionExpression.getAttributeTypeString([] as never),
+      );
+    });
+
+    it('Map', () => {
+      assert.equal(ConditionExpression.getAttributeTypeString('M'), 'M');
+      assert.equal(ConditionExpression.getAttributeTypeString(Object), 'M');
+
+      assert.throws(() =>
+        ConditionExpression.getAttributeTypeString({} as never),
+      );
+    });
+  });
+
   describe('init -> serialize()', () => {
     function assetSerialize(
       test: string,
