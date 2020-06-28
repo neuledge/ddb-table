@@ -1,6 +1,6 @@
 <h1 align="center" style="text-align:center">🔒 DDB-Table</h1>
 
-<h4 align="center">Strongly typed library for querying and modeling DynamoDB documents in Node.js.</h4>
+<h4 align="center">Strongly typed library for querying and modeling DynamoDB documents in TypeScript.</h4>
 
 <p align="center">
   <a href="https://www.npmjs.org/package/ddb-table">
