@@ -11,86 +11,200 @@ interface DemoItem {
   inner: {
     obj: string;
   };
+  set?: {
+    type: 'String';
+    values: string[];
+  };
   maybe?: boolean;
   hidden: boolean;
 }
 
 describe('Table', () => {
-  it('project(fields) type', () => {
-    const table = new Table<DemoItem, 'Id', 'Ver'>({
-      tableName: 'MyTable',
-      primaryKey: 'Id',
-      sortKey: 'Ver',
+  describe('.put()', () => {
+    it('Basic Usage', () => {
+      const table = new Table<DemoItem, 'Id', 'Ver'>({
+        tableName: 'MyTable',
+        primaryKey: 'Id',
+        sortKey: 'Ver',
+      });
+
+      assert.deepEqual(
+        table
+          .put({
+            Id: '12',
+            Ver: 2,
+            foo: 12.33,
+            inner: {
+              obj: 'foo',
+            },
+            hidden: false,
+          })
+          .condition((cn) => cn.attributeNotExists('Id'))
+          .serialize(),
+        {
+          TableName: 'MyTable',
+          ConditionExpression: 'attribute_not_exists(#Id)',
+          ExpressionAttributeNames: {
+            '#Id': 'Id',
+          },
+          ExpressionAttributeValues: {},
+          Item: {
+            Id: '12',
+            Ver: 2,
+            foo: 12.33,
+            inner: {
+              obj: 'foo',
+            },
+            hidden: false,
+          },
+        },
+      );
     });
-
-    const query = table
-      .get('ss', 1)
-      .project({ foo: false as boolean, maybe: 1 });
-
-    assert.ok<
-      GetQuery<
-        Omit<DemoItem, 'foo' | 'hidden' | 'inner'> & { foo?: number },
-        TableKey<DemoItem, 'Id', 'Ver'>
-      >
-    >(query);
   });
 
-  it('project(fields) query', () => {
-    const table = new Table<DemoItem, 'Id', 'Ver'>({
-      tableName: 'MyTable',
-      primaryKey: 'Id',
-      sortKey: 'Ver',
+  describe('.get()', () => {
+    it('Basic Usage', () => {
+      const table = new Table<DemoItem, 'Id', 'Ver'>({
+        tableName: 'MyTable',
+        primaryKey: 'Id',
+        sortKey: 'Ver',
+      });
+
+      assert.deepEqual(
+        table
+          .get('ss', 1)
+          .project({ foo: false as boolean, maybe: 1 })
+          .serialize(),
+        {
+          TableName: 'MyTable',
+          Key: {
+            Id: 'ss',
+            Ver: 1,
+          },
+          ProjectionExpression: '#maybe',
+          ExpressionAttributeNames: {
+            '#maybe': 'maybe',
+          },
+        },
+      );
     });
 
-    const query = table.get('ss', 1);
+    it('project(fields) type', () => {
+      const table = new Table<DemoItem, 'Id', 'Ver'>({
+        tableName: 'MyTable',
+        primaryKey: 'Id',
+        sortKey: 'Ver',
+      });
 
-    assert.ok<Required<Parameters<typeof query.project>[0]>>({
-      foo: 1,
-      // Id2kk: true,
-      maybe: true,
-      hidden: false,
-      inner: {
-        obj: false,
-      },
-    });
-  });
-
-  it('Basic Usage', () => {
-    const table = new Table<DemoItem, 'Id', 'Ver'>({
-      tableName: 'MyTable',
-      primaryKey: 'Id',
-      sortKey: 'Ver',
-    });
-
-    // table
-    //   .get('ss', 1)
-    //   .project({ foo: 1, Id2kk: true, maybe: true })
-    //   .exec()
-    //   .then((res) => {
-    //     if (!res.Item) return;
-    //
-    //     console.log(res.Item.Id);
-    //     console.log(res.Item.foo);
-    //     console.log(res.Item.Ver);
-    //     console.log(res.Item.maybe);
-    //   });
-
-    assert.deepEqual(
-      table
+      const query = table
         .get('ss', 1)
-        .project({ foo: false as boolean, maybe: 1 })
-        .serialize(),
-      {
-        TableName: 'MyTable',
-        Key: {
-          Id: 'ss',
-          Ver: 1,
+        .project({ foo: false as boolean, maybe: 1 });
+
+      assert.ok<
+        GetQuery<
+          Omit<DemoItem, 'foo' | 'hidden' | 'inner'> & { foo?: number },
+          TableKey<DemoItem, 'Id', 'Ver'>
+        >
+      >(query);
+    });
+
+    it('project(fields) query', () => {
+      const table = new Table<DemoItem, 'Id', 'Ver'>({
+        tableName: 'MyTable',
+        primaryKey: 'Id',
+        sortKey: 'Ver',
+      });
+
+      const query = table.get('ss', 1);
+
+      assert.ok<Required<Parameters<typeof query.project>[0]>>({
+        foo: 1,
+        // Id2kk: true,
+        maybe: true,
+        hidden: false,
+        set: false,
+        inner: {
+          obj: false,
         },
-        ProjectionExpression: '#maybe',
-        ExpressionAttributeNames: {
-          '#maybe': 'maybe',
+      });
+    });
+  });
+
+  describe('.update()', () => {
+    it('Basic Usage', () => {
+      const table = new Table<DemoItem, 'Id', 'Ver'>({
+        tableName: 'MyTable',
+        primaryKey: 'Id',
+        sortKey: 'Ver',
+      });
+
+      assert.deepEqual(
+        table
+          .update('12', 2)
+          .condition((cn) => cn.attributeExists('Id'))
+          .set(['inner', 'obj'], 'hello')
+          .add('foo', 5)
+          .delete('set', { type: 'String', values: ['del'] })
+          .remove('hidden')
+          .serialize(),
+        {
+          TableName: 'MyTable',
+          Key: {
+            Id: '12',
+            Ver: 2,
+          },
+          UpdateExpression:
+            'SET #inner.#obj = :obj REMOVE #hidden ADD #foo :foo DELETE #set :set',
+          ConditionExpression: 'attribute_exists(#Id)',
+          ExpressionAttributeNames: {
+            '#Id': 'Id',
+            '#foo': 'foo',
+            '#hidden': 'hidden',
+            '#inner': 'inner',
+            '#obj': 'obj',
+            '#set': 'set',
+          },
+          ExpressionAttributeValues: {
+            ':foo': 5,
+            ':obj': 'hello',
+            ':set': {
+              type: 'String',
+              values: ['del'],
+            },
+          },
         },
-      },
-    );
+      );
+    });
+  });
+
+  describe('.delete()', () => {
+    it('Basic Usage', () => {
+      const table = new Table<DemoItem, 'Id', 'Ver'>({
+        tableName: 'MyTable',
+        primaryKey: 'Id',
+        sortKey: 'Ver',
+      });
+
+      assert.deepEqual(
+        table
+          .delete('12', 2)
+          .condition((cn) => cn.eq('foo', 12))
+          .serialize(),
+        {
+          TableName: 'MyTable',
+          Key: {
+            Id: '12',
+            Ver: 2,
+          },
+          ConditionExpression: '#foo = :foo',
+          ExpressionAttributeNames: {
+            '#foo': 'foo',
+          },
+          ExpressionAttributeValues: {
+            ':foo': 12,
+          },
+        },
+      );
+    });
   });
 });

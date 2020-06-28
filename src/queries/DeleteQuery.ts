@@ -40,7 +40,7 @@ export default class DeleteQuery<T extends K, K extends Item> extends Query<
   }
 
   protected syncInput(): void {
-    super.handleInputUpdated();
+    super.syncInput();
 
     this.input.ExpressionAttributeValues = this.values.serialize();
     this.input.ConditionExpression = this.conditions.serialize();
