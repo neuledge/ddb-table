@@ -22,4 +22,37 @@ describe('ProjectionExpression', () => {
     assetSerialize(' #foo  ,  #bar ', '#foo, #bar');
     assetSerialize(' foo,  #hello, #testme ');
   });
+
+  describe('.add', () => {
+    it('Basic use case', () => {
+      const names = new ExpressionAttributeNames();
+      const exp = new ProjectionExpression<
+        {
+          sku: string;
+          name: string;
+          description: string;
+          price: {
+            amount: number;
+            currency: 'USD' | 'EUR';
+          };
+        },
+        { sku: string }
+      >(names);
+
+      exp.add({
+        name: 1,
+        description: 0,
+        price: {
+          amount: 1,
+        },
+      });
+
+      assert.equal(exp.serialize(), '#name, #price.#amount');
+      assert.deepEqual(names.serialize(), {
+        '#name': 'name',
+        '#price': 'price',
+        '#amount': 'amount',
+      });
+    });
+  });
 });
