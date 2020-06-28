@@ -9,7 +9,11 @@ import {
   ExpressionAttributeValues,
   UpdateExpression,
 } from '../expressions';
-import { AddDeleteValue, SetValue } from '../expressions/UpdateExpression';
+import {
+  SetValue,
+  AddValue,
+  DeleteValue,
+} from '../expressions/UpdateExpression';
 import { ConditionGenerator } from '../expressions/ConditionExpression';
 
 type QueryInput<K> = Omit<UpdateItemInput, 'Key'> & { Key: K };
@@ -165,35 +169,29 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
     return this;
   }
 
-  public add<K1 extends keyof T>(
-    path: K1 | [K1],
-    value: AddDeleteValue<T[K1]>,
-  ): this;
+  public add<K1 extends keyof T>(path: K1 | [K1], value: AddValue<T[K1]>): this;
   public add<K1 extends keyof T, K2 extends keyof T[K1]>(
     path: [K1, K2],
-    value: AddDeleteValue<T[K1][K2]>,
+    value: AddValue<T[K1][K2]>,
   ): this;
   public add<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2]
-  >(path: [K1, K2, K3], value: AddDeleteValue<T[K1][K2][K3]>): this;
+  >(path: [K1, K2, K3], value: AddValue<T[K1][K2][K3]>): this;
   public add<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3]
-  >(path: [K1, K2, K3, K4], value: AddDeleteValue<T[K1][K2][K3][K4]>): this;
+  >(path: [K1, K2, K3, K4], value: AddValue<T[K1][K2][K3][K4]>): this;
   public add<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4]
-  >(
-    path: [K1, K2, K3, K4, K5],
-    value: AddDeleteValue<T[K1][K2][K3][K4][K5]>,
-  ): this;
+  >(path: [K1, K2, K3, K4, K5], value: AddValue<T[K1][K2][K3][K4][K5]>): this;
   public add<
     K1 extends keyof T,
     K2 extends keyof T[K1],
@@ -203,7 +201,7 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
     K6 extends keyof T[K1][K2][K3][K4][K5]
   >(
     path: [K1, K2, K3, K4, K5, K6],
-    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6]>,
+    value: AddValue<T[K1][K2][K3][K4][K5][K6]>,
   ): this;
   public add<
     K1 extends keyof T,
@@ -215,7 +213,7 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
     K7 extends keyof T[K1][K2][K3][K4][K5][K6]
   >(
     path: [K1, K2, K3, K4, K5, K6, K7],
-    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6][K7]>,
+    value: AddValue<T[K1][K2][K3][K4][K5][K6][K7]>,
   ): this;
   public add<
     K1 extends keyof T,
@@ -228,7 +226,7 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
     K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
   >(
     path: [K1, K2, K3, K4, K5, K6, K7, K8],
-    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6][K7][K8]>,
+    value: AddValue<T[K1][K2][K3][K4][K5][K6][K7][K8]>,
   ): this;
   public add<
     K1 extends keyof T,
@@ -249,23 +247,23 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
 
   public delete<K1 extends keyof T>(
     path: K1 | [K1],
-    value: AddDeleteValue<T[K1]>,
+    value: DeleteValue<T[K1]>,
   ): this;
   public delete<K1 extends keyof T, K2 extends keyof T[K1]>(
     path: [K1, K2],
-    value: AddDeleteValue<T[K1][K2]>,
+    value: DeleteValue<T[K1][K2]>,
   ): this;
   public delete<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2]
-  >(path: [K1, K2, K3], value: AddDeleteValue<T[K1][K2][K3]>): this;
+  >(path: [K1, K2, K3], value: DeleteValue<T[K1][K2][K3]>): this;
   public delete<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3]
-  >(path: [K1, K2, K3, K4], value: AddDeleteValue<T[K1][K2][K3][K4]>): this;
+  >(path: [K1, K2, K3, K4], value: DeleteValue<T[K1][K2][K3][K4]>): this;
   public delete<
     K1 extends keyof T,
     K2 extends keyof T[K1],
@@ -274,7 +272,7 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
     K5 extends keyof T[K1][K2][K3][K4]
   >(
     path: [K1, K2, K3, K4, K5],
-    value: AddDeleteValue<T[K1][K2][K3][K4][K5]>,
+    value: DeleteValue<T[K1][K2][K3][K4][K5]>,
   ): this;
   public delete<
     K1 extends keyof T,
@@ -285,7 +283,7 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
     K6 extends keyof T[K1][K2][K3][K4][K5]
   >(
     path: [K1, K2, K3, K4, K5, K6],
-    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6]>,
+    value: DeleteValue<T[K1][K2][K3][K4][K5][K6]>,
   ): this;
   public delete<
     K1 extends keyof T,
@@ -297,7 +295,7 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
     K7 extends keyof T[K1][K2][K3][K4][K5][K6]
   >(
     path: [K1, K2, K3, K4, K5, K6, K7],
-    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6][K7]>,
+    value: DeleteValue<T[K1][K2][K3][K4][K5][K6][K7]>,
   ): this;
   public delete<
     K1 extends keyof T,
@@ -310,7 +308,7 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
     K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
   >(
     path: [K1, K2, K3, K4, K5, K6, K7, K8],
-    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6][K7][K8]>,
+    value: DeleteValue<T[K1][K2][K3][K4][K5][K6][K7][K8]>,
   ): this;
   public delete<
     K1 extends keyof T,
