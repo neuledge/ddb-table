@@ -61,6 +61,7 @@ describe('Table', () => {
             hidden: false,
           })
           .condition((cn) => cn.attributeNotExists('Id'))
+          .return('NONE')
           .serialize(),
         {
           TableName: 'MyTable',
@@ -78,6 +79,7 @@ describe('Table', () => {
             },
             hidden: false,
           },
+          ReturnValues: 'NONE',
         },
       );
     });

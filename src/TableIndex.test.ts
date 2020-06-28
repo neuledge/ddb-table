@@ -25,6 +25,38 @@ describe('TableIndex', () => {
     });
   });
 
+  // describe('.createNamesMap()', () => {
+  //   it('Basic use case', () => {
+  //     const table = new TableIndex<DemoItem, 'Id'>({
+  //       tableName: 'MyTable',
+  //       primaryKey: 'Id',
+  //     });
+  //
+  //     const names = table.createNamesMap();
+  //
+  //     assert.equal(names.add('foo'), '#foo');
+  //     assert.deepEqual(names.serialize(), {
+  //       '#foo': 'foo',
+  //     });
+  //   });
+  // });
+
+  // describe('.createValuesMap()', () => {
+  //   it('Basic use case', () => {
+  //     const table = new TableIndex<DemoItem, 'Id'>({
+  //       tableName: 'MyTable',
+  //       primaryKey: 'Id',
+  //     });
+  //
+  //     const values = table.createValuesMap();
+  //
+  //     assert.equal(values.add('foo', 3), ':foo');
+  //     assert.deepEqual(values.serialize(), {
+  //       ':foo': 3,
+  //     });
+  //   });
+  // });
+
   describe('.scan()', () => {
     it('Basic use case', () => {
       const table = new TableIndex<DemoItem, 'Id'>({

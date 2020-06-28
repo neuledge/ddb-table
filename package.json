@@ -37,8 +37,9 @@
   "author": "Moshe Simantov <me@moshe.io>",
   "repository": "https://github.com/neuledge/ddb-table",
   "license": "MIT",
-  "main": "lib/index.js",
-  "module": "lib/index.js",
+  "main": "lib/index",
+  "module": "lib/index",
+  "types": "lib/index",
   "files": [
     "/lib/*"
   ],

@@ -1,14 +1,6 @@
-import DocumentClient, {
-  ExpressionAttributeNameMap,
-  ExpressionAttributeValueMap,
-  Item,
-} from './DocumentClient';
+import DocumentClient, { Item } from './DocumentClient';
 import ScanQuery from './queries/ScanQuery';
 import QueryQuery from './queries/QueryQuery';
-import {
-  ExpressionAttributeNames,
-  ExpressionAttributeValues,
-} from './expressions';
 
 export interface TableIndexOptions<H, S> {
   tableName: string;
@@ -52,17 +44,17 @@ export default class TableIndex<
     this.sortKey = opts.sortKey;
   }
 
-  public createNamesMap(
-    nameMap?: ExpressionAttributeNameMap,
-  ): ExpressionAttributeNames<T> {
-    return new ExpressionAttributeNames<T>(nameMap);
-  }
+  // public createNamesMap(
+  //   nameMap?: ExpressionAttributeNameMap,
+  // ): ExpressionAttributeNames<T> {
+  //   return new ExpressionAttributeNames<T>(nameMap);
+  // }
 
-  public createValuesMap(
-    valueMap?: ExpressionAttributeValueMap,
-  ): ExpressionAttributeValues {
-    return new ExpressionAttributeValues(valueMap);
-  }
+  // public createValuesMap(
+  //   valueMap?: ExpressionAttributeValueMap,
+  // ): ExpressionAttributeValues {
+  //   return new ExpressionAttributeValues(valueMap);
+  // }
 
   public key(
     ...[primaryKey, sortKey]: TableKeyArgs<T, H, S>
