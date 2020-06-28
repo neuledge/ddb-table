@@ -6,9 +6,16 @@ import ExpressionAttributeValues from './ExpressionAttributeValues';
 // https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type AddDeleteValue<T> = [T] extends [{ type: string; values: any[] }]
-  ? T['values'][number]
-  : [T] extends number
+export type AddValue<T> = [T] extends [
+  { type: string; values: any[] } | number | undefined,
+]
+  ? T
+  : never;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type DeleteValue<T> = [T] extends [
+  { type: string; values: any[] } | undefined,
+]
   ? T
   : never;
 
@@ -195,35 +202,29 @@ export default class UpdateExpression<T> {
     return this;
   }
 
-  public add<K1 extends keyof T>(
-    path: K1 | [K1],
-    value: AddDeleteValue<T[K1]>,
-  ): this;
+  public add<K1 extends keyof T>(path: K1 | [K1], value: AddValue<T[K1]>): this;
   public add<K1 extends keyof T, K2 extends keyof T[K1]>(
     path: [K1, K2],
-    value: AddDeleteValue<T[K1][K2]>,
+    value: AddValue<T[K1][K2]>,
   ): this;
   public add<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2]
-  >(path: [K1, K2, K3], value: AddDeleteValue<T[K1][K2][K3]>): this;
+  >(path: [K1, K2, K3], value: AddValue<T[K1][K2][K3]>): this;
   public add<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3]
-  >(path: [K1, K2, K3, K4], value: AddDeleteValue<T[K1][K2][K3][K4]>): this;
+  >(path: [K1, K2, K3, K4], value: AddValue<T[K1][K2][K3][K4]>): this;
   public add<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4]
-  >(
-    path: [K1, K2, K3, K4, K5],
-    value: AddDeleteValue<T[K1][K2][K3][K4][K5]>,
-  ): this;
+  >(path: [K1, K2, K3, K4, K5], value: AddValue<T[K1][K2][K3][K4][K5]>): this;
   public add<
     K1 extends keyof T,
     K2 extends keyof T[K1],
@@ -233,7 +234,7 @@ export default class UpdateExpression<T> {
     K6 extends keyof T[K1][K2][K3][K4][K5]
   >(
     path: [K1, K2, K3, K4, K5, K6],
-    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6]>,
+    value: AddValue<T[K1][K2][K3][K4][K5][K6]>,
   ): this;
   public add<
     K1 extends keyof T,
@@ -245,7 +246,7 @@ export default class UpdateExpression<T> {
     K7 extends keyof T[K1][K2][K3][K4][K5][K6]
   >(
     path: [K1, K2, K3, K4, K5, K6, K7],
-    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6][K7]>,
+    value: AddValue<T[K1][K2][K3][K4][K5][K6][K7]>,
   ): this;
   public add<
     K1 extends keyof T,
@@ -258,7 +259,7 @@ export default class UpdateExpression<T> {
     K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
   >(
     path: [K1, K2, K3, K4, K5, K6, K7, K8],
-    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6][K7][K8]>,
+    value: AddValue<T[K1][K2][K3][K4][K5][K6][K7][K8]>,
   ): this;
   public add<
     K1 extends keyof T,
@@ -287,23 +288,23 @@ export default class UpdateExpression<T> {
 
   public delete<K1 extends keyof T>(
     path: K1 | [K1],
-    value: AddDeleteValue<T[K1]>,
+    value: DeleteValue<T[K1]>,
   ): this;
   public delete<K1 extends keyof T, K2 extends keyof T[K1]>(
     path: [K1, K2],
-    value: AddDeleteValue<T[K1][K2]>,
+    value: DeleteValue<T[K1][K2]>,
   ): this;
   public delete<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2]
-  >(path: [K1, K2, K3], value: AddDeleteValue<T[K1][K2][K3]>): this;
+  >(path: [K1, K2, K3], value: DeleteValue<T[K1][K2][K3]>): this;
   public delete<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3]
-  >(path: [K1, K2, K3, K4], value: AddDeleteValue<T[K1][K2][K3][K4]>): this;
+  >(path: [K1, K2, K3, K4], value: DeleteValue<T[K1][K2][K3][K4]>): this;
   public delete<
     K1 extends keyof T,
     K2 extends keyof T[K1],
@@ -312,7 +313,7 @@ export default class UpdateExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4]
   >(
     path: [K1, K2, K3, K4, K5],
-    value: AddDeleteValue<T[K1][K2][K3][K4][K5]>,
+    value: DeleteValue<T[K1][K2][K3][K4][K5]>,
   ): this;
   public delete<
     K1 extends keyof T,
@@ -323,7 +324,7 @@ export default class UpdateExpression<T> {
     K6 extends keyof T[K1][K2][K3][K4][K5]
   >(
     path: [K1, K2, K3, K4, K5, K6],
-    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6]>,
+    value: DeleteValue<T[K1][K2][K3][K4][K5][K6]>,
   ): this;
   public delete<
     K1 extends keyof T,
@@ -335,7 +336,7 @@ export default class UpdateExpression<T> {
     K7 extends keyof T[K1][K2][K3][K4][K5][K6]
   >(
     path: [K1, K2, K3, K4, K5, K6, K7],
-    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6][K7]>,
+    value: DeleteValue<T[K1][K2][K3][K4][K5][K6][K7]>,
   ): this;
   public delete<
     K1 extends keyof T,
@@ -348,7 +349,7 @@ export default class UpdateExpression<T> {
     K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
   >(
     path: [K1, K2, K3, K4, K5, K6, K7, K8],
-    value: AddDeleteValue<T[K1][K2][K3][K4][K5][K6][K7][K8]>,
+    value: DeleteValue<T[K1][K2][K3][K4][K5][K6][K7][K8]>,
   ): this;
   public delete<
     K1 extends keyof T,
@@ -361,7 +362,7 @@ export default class UpdateExpression<T> {
     K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
   >(
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
-    value: unknown,
+    value: DeleteValue<unknown>,
   ): this {
     if (!Array.isArray(path)) {
       path = [path];

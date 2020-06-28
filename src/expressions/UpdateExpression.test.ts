@@ -39,9 +39,10 @@ describe('UpdateExpression', () => {
 
     assetSerialize('SET foo = :foo ADD #delete :d');
     assetSerialize('SET foo = :foo REMOVE #c ADD #delete :d DELETE #a[2] :a');
+    assetSerialize('DELETE #a[2] :a');
   });
 
-  describe('set()', (): void => {
+  describe('.set()', (): void => {
     it('Set foo.bar', (): void => {
       const names = new ExpressionAttributeNames<DemoItem>();
       const values = new ExpressionAttributeValues();
@@ -72,6 +73,77 @@ describe('UpdateExpression', () => {
       });
       assert.deepEqual(values.serialize(), {
         ':list': [123, 1],
+      });
+    });
+  });
+
+  describe('.remove()', (): void => {
+    it('Basic use case', (): void => {
+      const names = new ExpressionAttributeNames<DemoItem>();
+      const values = new ExpressionAttributeValues();
+      const update = new UpdateExpression<DemoItem>(names, values);
+
+      update.remove('set');
+      update.remove('foo', 'bar');
+
+      assert.deepEqual(update.serialize(), 'REMOVE #set, #foo.#bar');
+      assert.deepEqual(names.serialize(), {
+        '#set': 'set',
+        '#foo': 'foo',
+        '#bar': 'bar',
+      });
+    });
+  });
+
+  describe('.add()', (): void => {
+    it('number', (): void => {
+      const names = new ExpressionAttributeNames<DemoItem>();
+      const values = new ExpressionAttributeValues();
+      const update = new UpdateExpression<DemoItem>(names, values);
+
+      update.add(['foo', 'bar'], 4);
+
+      assert.deepEqual(update.serialize(), 'ADD #foo.#bar :bar');
+      assert.deepEqual(names.serialize(), {
+        '#foo': 'foo',
+        '#bar': 'bar',
+      });
+      assert.deepEqual(values.serialize(), {
+        ':bar': 4,
+      });
+    });
+
+    it('set', (): void => {
+      const names = new ExpressionAttributeNames<DemoItem>();
+      const values = new ExpressionAttributeValues();
+      const update = new UpdateExpression<DemoItem>(names, values);
+
+      update.add('set', { type: 'String', values: ['test'] });
+
+      assert.deepEqual(update.serialize(), 'ADD #set :set');
+      assert.deepEqual(names.serialize(), {
+        '#set': 'set',
+      });
+      assert.deepEqual(values.serialize(), {
+        ':set': { type: 'String', values: ['test'] },
+      });
+    });
+  });
+
+  describe('.delete()', (): void => {
+    it('set', (): void => {
+      const names = new ExpressionAttributeNames<DemoItem>();
+      const values = new ExpressionAttributeValues();
+      const update = new UpdateExpression<DemoItem>(names, values);
+
+      update.delete('set', { type: 'String', values: ['test'] });
+
+      assert.deepEqual(update.serialize(), 'DELETE #set :set');
+      assert.deepEqual(names.serialize(), {
+        '#set': 'set',
+      });
+      assert.deepEqual(values.serialize(), {
+        ':set': { type: 'String', values: ['test'] },
       });
     });
   });
