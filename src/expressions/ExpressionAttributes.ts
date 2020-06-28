@@ -9,7 +9,7 @@ export default class ExpressionAttributes<T> {
 
   protected setValue(requestedKey: string, value: T): string {
     let key = requestedKey;
-    let i = 0;
+    let i = 2;
 
     while (key in this.attributesMap) {
       if (this.attributesMap[key] === value) {

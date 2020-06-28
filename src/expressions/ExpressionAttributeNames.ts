@@ -19,10 +19,6 @@ export default class ExpressionAttributeNames<T> extends ExpressionAttributes<
   >(
     ...path: [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]]
   ): string {
-    if (!Array.isArray(path)) {
-      path = [path];
-    }
-
     let res = '';
     for (const key of path) {
       if (res && typeof key === 'number') {
