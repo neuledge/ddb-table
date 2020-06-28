@@ -19,7 +19,28 @@ interface DemoItem {
   hidden: boolean;
 }
 
+type DemoIndex = Pick<DemoItem, 'Id' | 'foo' | 'maybe'>;
+
 describe('Table', () => {
+  describe('.index()', () => {
+    it('Basic Usage', () => {
+      const table = new Table<DemoItem, 'Id', 'Ver'>({
+        tableName: 'MyTable',
+        primaryKey: 'Id',
+        sortKey: 'Ver',
+      });
+
+      const index = table.index<DemoIndex, 'Id', 'foo'>('Id-foo', 'Id', 'foo');
+
+      assert.deepEqual(index.scan().serialize(), {
+        TableName: 'MyTable',
+        IndexName: 'Id-foo',
+        ExpressionAttributeNames: {},
+        ExpressionAttributeValues: {},
+      });
+    });
+  });
+
   describe('.put()', () => {
     it('Basic Usage', () => {
       const table = new Table<DemoItem, 'Id', 'Ver'>({

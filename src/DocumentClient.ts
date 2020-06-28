@@ -4,6 +4,10 @@ import { DocumentClient } from 'aws-sdk/lib/dynamodb/document_client';
 export type Item = DocumentClient.PutItemInputAttributeMap;
 export type Key = DocumentClient.Key;
 
+export type StringSet = DocumentClient.StringSet;
+export type NumberSet = DocumentClient.NumberSet;
+export type BinarySet = DocumentClient.BinarySet;
+
 export type AttributeName = DocumentClient.AttributeName;
 export type ExpressionAttributeNameMap = DocumentClient.ExpressionAttributeNameMap;
 export type ExpressionAttributeValueMap = DocumentClient.ExpressionAttributeValueMap;
@@ -29,4 +33,5 @@ export type DeleteItemOutput = DocumentClient.DeleteItemOutput;
 
 export type AWSError = AWS.AWSError;
 export type AWSRequest<D, E = AWSError> = AWS.Request<D, E>;
+
 export default AWS.DynamoDB.DocumentClient;

@@ -68,7 +68,7 @@ export default class Query<T extends Item, I extends Inputs, O> {
   }
 
   public requestOnly(): ReturnType<QueryRequest<I, O>> {
-    return this.request(this.input);
+    return this.request(this.serialize());
   }
 
   public exec(): Promise<O> {

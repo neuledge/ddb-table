@@ -22,14 +22,20 @@ export default class Table<
     super(opts);
   }
 
+  public index<P extends Partial<T>, H extends keyof P>(
+    name: string,
+    primaryKey: H,
+  ): TableIndex<P, H, never>;
+  public index<P extends Partial<T>, H extends keyof P, S extends keyof P>(
+    name: string,
+    primaryKey: H,
+    sortKey: S,
+  ): TableIndex<P, H, S>;
   public index<
     P extends Partial<T>,
     H extends keyof P,
     S extends keyof P = never
-  >(
-    name: string,
-    ...[primaryKey, sortKey]: TableKeyArgs<P, H, S>
-  ): TableIndex<P, H, S> {
+  >(name: string, primaryKey: H, sortKey?: S): TableIndex<P, H, S> {
     return new TableIndex(({
       tableName: this.name,
       indexName: name,

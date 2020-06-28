@@ -1,31 +1,26 @@
 import { UpdateExpression as UpdateExpressionStr } from '../DocumentClient';
 import ExpressionAttributeNames from './ExpressionAttributeNames';
 import ExpressionAttributeValues from './ExpressionAttributeValues';
+import UpdateValueExpression from './UpdateValueExpression';
 
 // Docs:
 // https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AddValue<T> = [T] extends [
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   { type: string; values: any[] } | number | undefined,
 ]
   ? T
   : never;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type DeleteValue<T> = [T] extends [
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   { type: string; values: any[] } | undefined,
 ]
   ? T
   : never;
 
-export type SetValue<T, V> =
-  | V
-  | ((
-      path: string,
-      names: ExpressionAttributeNames<T>,
-      values: ExpressionAttributeValues,
-    ) => string);
+export type SetValue<T, V> = V | ((exp: UpdateValueExpression<T, V>) => string);
 
 export default class UpdateExpression<T> {
   private names: ExpressionAttributeNames<T>;
@@ -176,11 +171,19 @@ export default class UpdateExpression<T> {
     }
 
     const pathName = this.names.add(...path);
+    const valueKey = String(path[path.length - 1]);
 
     this.sets[pathName] =
       typeof value === 'function'
-        ? value(pathName, this.names, this.values)
-        : this.values.add(String(path[path.length - 1]), value);
+        ? value(
+            new UpdateValueExpression(
+              this.names,
+              this.values,
+              pathName,
+              valueKey,
+            ),
+          )
+        : this.values.add(valueKey, value);
 
     return this;
   }

@@ -75,6 +75,41 @@ describe('UpdateExpression', () => {
         ':list': [123, 1],
       });
     });
+
+    it('Set list', (): void => {
+      const names = new ExpressionAttributeNames<DemoItem>();
+      const values = new ExpressionAttributeValues();
+      const update = new UpdateExpression<DemoItem>(names, values);
+
+      update.set('list', [123, 1]);
+
+      assert.deepEqual(update.serialize(), 'SET #list = :list');
+      assert.deepEqual(names.serialize(), {
+        '#list': 'list',
+      });
+      assert.deepEqual(values.serialize(), {
+        ':list': [123, 1],
+      });
+    });
+
+    it('Set exp', (): void => {
+      const names = new ExpressionAttributeNames<DemoItem>();
+      const values = new ExpressionAttributeValues();
+      const update = new UpdateExpression<DemoItem>(names, values);
+
+      update.set('list', (exp) => exp.listAppend([123]));
+
+      assert.deepEqual(
+        update.serialize(),
+        'SET #list = list_append(#list, :list)',
+      );
+      assert.deepEqual(names.serialize(), {
+        '#list': 'list',
+      });
+      assert.deepEqual(values.serialize(), {
+        ':list': [123],
+      });
+    });
   });
 
   describe('.remove()', (): void => {

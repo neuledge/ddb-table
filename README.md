@@ -57,7 +57,7 @@ npm i ddb-table
 ## Usage
 
 ```ts
-import Table from 'ddb-table';
+import Table, { Set, setOf } from 'ddb-table';
 
 interface MessageSchema {
   threadId: string;
@@ -65,7 +65,8 @@ interface MessageSchema {
   senderId: string;
   message: string;
   status: 'sent' | 'received';
-  attachments?: {
+  tags?: Set<string>;
+  attachments: {
     name: string;
     URL: string;
   }[];
@@ -81,14 +82,30 @@ const messages = new Table<MessageSchema, 'threadId', 'timestamp'>({
 const updateRes = await messages
   .update('john@gmail.com', 1588191225322)
   .set('message', 'Hello World!')
-  .set(['attachments', 1, 'name'], 'Profile Image')
+  .add('tags', setOf('unread', 'important'))
+  .set('attachments', (exp) =>
+    exp.listAppend([{ name: 'Test', URL: 'demo.com' }]),
+  )
   .return('ALL_NEW')
   .exec(); 
 
-console.log(res.Attributes);
+console.log(updateRes.Attributes);
+```
 
+#### Working with indexes as well:
+
+```ts
 // create a secondary index definition
-const outboxIndex = messages.index('senderId-timestamp-index', 'senderId', 'timestamp');
+type SenderTimestampIndex = Pick<
+  MessageSchema,
+  'threadId' | 'timestamp' | 'senderId'
+>;
+
+const outboxIndex = messages.index<
+  SenderTimestampIndex,
+  'senderId',
+  'timestamp'
+>('senderId-timestamp-index', 'senderId', 'timestamp');
 
 const queryRes = await outboxIndex
   .query()
@@ -98,7 +115,7 @@ const queryRes = await outboxIndex
   .reverseIndex()
   .exec();
 
-console.log(res.Items);
+console.log(queryRes.Items);
 ```
 
 <br>
