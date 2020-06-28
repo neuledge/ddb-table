@@ -47,7 +47,8 @@ export default class Query<T extends Item, I extends Inputs, O> {
     return this;
   }
 
-  public extend(input: I): this {
+  public extend(input: Partial<I>): this {
+    this.syncInput();
     Object.assign(this.input, input);
     this.handleInputUpdated();
 
@@ -56,6 +57,12 @@ export default class Query<T extends Item, I extends Inputs, O> {
 
   public serialize(): I {
     this.syncInput();
+
+    for (const key in this.input) {
+      if (this.input[key] === undefined) {
+        delete this.input[key];
+      }
+    }
 
     return this.input;
   }

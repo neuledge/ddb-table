@@ -27,10 +27,24 @@ describe('TableIndex', () => {
 
   describe('.scan()', () => {
     it('Basic use case', () => {
+      const table = new TableIndex<DemoItem, 'Id'>({
+        tableName: 'MyTable',
+        primaryKey: 'Id',
+      });
+
+      assert.deepEqual(table.scan().serialize(), {
+        TableName: 'MyTable',
+        ExpressionAttributeNames: {},
+        ExpressionAttributeValues: {},
+      });
+    });
+
+    it('Full use case', () => {
       const table = new TableIndex<DemoItem, 'Id', 'Ver'>({
         tableName: 'MyTable',
         primaryKey: 'Id',
         sortKey: 'Ver',
+        indexName: 'Test',
       });
 
       assert.deepEqual(
@@ -40,24 +54,29 @@ describe('TableIndex', () => {
           .select('ALL_ATTRIBUTES')
           .limit(20)
           .startKey({ Id: '111', Ver: 5 })
+          .project({ inner: 1 })
+          .segment(1, 10)
           .serialize(),
         {
           TableName: 'MyTable',
           FilterExpression: '#hidden <> :hidden',
-          IndexName: undefined,
+          IndexName: 'Test',
           ExpressionAttributeNames: {
             '#hidden': 'hidden',
+            '#inner': 'inner',
           },
           ExpressionAttributeValues: {
             ':hidden': true,
           },
-          ProjectionExpression: undefined,
+          ProjectionExpression: '#inner',
           Select: 'ALL_ATTRIBUTES',
           Limit: 20,
           ExclusiveStartKey: {
             Id: '111',
             Ver: 5,
           },
+          Segment: 1,
+          TotalSegments: 10,
         },
       );
     });
@@ -65,10 +84,35 @@ describe('TableIndex', () => {
 
   describe('.query()', () => {
     it('Basic use case', () => {
+      const table = new TableIndex<DemoItem, 'Id'>({
+        tableName: 'MyTable',
+        primaryKey: 'Id',
+      });
+
+      assert.deepEqual(
+        table
+          .query()
+          .keyCondition((cn) => cn.eq('Id', '123'))
+          .serialize(),
+        {
+          TableName: 'MyTable',
+          KeyConditionExpression: '#Id = :Id',
+          ExpressionAttributeNames: {
+            '#Id': 'Id',
+          },
+          ExpressionAttributeValues: {
+            ':Id': '123',
+          },
+        },
+      );
+    });
+
+    it('Full use case', () => {
       const table = new TableIndex<DemoItem, 'Id', 'Ver'>({
         tableName: 'MyTable',
         primaryKey: 'Id',
         sortKey: 'Ver',
+        indexName: 'Test',
       });
 
       assert.deepEqual(
@@ -77,11 +121,15 @@ describe('TableIndex', () => {
           .keyCondition((cn) => cn.eq('Id', '123').and((cn) => cn.gt('Ver', 5)))
           .project({ inner: 1 })
           .reverseIndex()
+          .calcCapacity('TOTAL')
+          .extend({
+            ConsistentRead: true,
+          })
           .serialize(),
         {
           TableName: 'MyTable',
           KeyConditionExpression: '#Id = :Id AND #Ver > :Ver',
-          IndexName: undefined,
+          IndexName: 'Test',
           ExpressionAttributeNames: {
             '#Id': 'Id',
             '#Ver': 'Ver',
@@ -92,8 +140,9 @@ describe('TableIndex', () => {
             ':Ver': 5,
           },
           ProjectionExpression: '#inner',
-          FilterExpression: undefined,
           ScanIndexForward: false,
+          ReturnConsumedCapacity: 'TOTAL',
+          ConsistentRead: true,
         },
       );
     });
