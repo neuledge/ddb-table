@@ -43,12 +43,14 @@ describe('README.md', () => {
       }[];
     }
 
+    const documentClient = new AWS.DynamoDB.DocumentClient();
+
     // create the basic table definition
     const messages = new Table<MessageSchema, 'threadId', 'timestamp'>({
       tableName: 'Messages',
       primaryKey: 'threadId',
       sortKey: 'timestamp',
-      documentClient: new AWS.DynamoDB.DocumentClient(),
+      documentClient,
     });
 
     const updateRes = await messages
@@ -83,10 +85,7 @@ describe('README.md', () => {
           },
         ],
         ':message': 'Hello World!',
-        ':tags': {
-          type: 'String',
-          values: ['unread', 'important'],
-        },
+        ':tags': documentClient.createSet(['unread', 'important']),
       },
       ReturnValues: 'ALL_NEW',
     });

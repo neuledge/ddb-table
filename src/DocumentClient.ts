@@ -1,37 +1,38 @@
-import AWS from 'aws-sdk';
-import { DocumentClient } from 'aws-sdk/lib/dynamodb/document_client';
+import { AWSError as AWSLocalError, Request, DynamoDB } from 'aws-sdk';
+import { DocumentClient as Namespace } from 'aws-sdk/lib/dynamodb/document_client';
 
-export type Item = DocumentClient.PutItemInputAttributeMap;
-export type Key = DocumentClient.Key;
+export type Item = Namespace.PutItemInputAttributeMap;
+export type Key = Namespace.Key;
 
-export type StringSet = DocumentClient.StringSet;
-export type NumberSet = DocumentClient.NumberSet;
-export type BinarySet = DocumentClient.BinarySet;
+export type StringSet = Namespace.StringSet;
+export type NumberSet = Namespace.NumberSet;
+export type BinarySet = Namespace.BinarySet;
+export type BinaryType = Namespace.binaryType;
 
-export type AttributeName = DocumentClient.AttributeName;
-export type ExpressionAttributeNameMap = DocumentClient.ExpressionAttributeNameMap;
-export type ExpressionAttributeValueMap = DocumentClient.ExpressionAttributeValueMap;
+export type AttributeName = Namespace.AttributeName;
+export type ExpressionAttributeNameMap = Namespace.ExpressionAttributeNameMap;
+export type ExpressionAttributeValueMap = Namespace.ExpressionAttributeValueMap;
 
-export type PutItemInput = DocumentClient.PutItemInput;
-export type PutItemOutput = DocumentClient.PutItemOutput;
+export type PutItemInput = Namespace.PutItemInput;
+export type PutItemOutput = Namespace.PutItemOutput;
 
-export type GetItemInput = DocumentClient.GetItemInput;
-export type GetItemOutput = DocumentClient.GetItemOutput;
+export type GetItemInput = Namespace.GetItemInput;
+export type GetItemOutput = Namespace.GetItemOutput;
 
-export type ScanInput = DocumentClient.ScanInput;
-export type ScanOutput = DocumentClient.ScanOutput;
+export type ScanInput = Namespace.ScanInput;
+export type ScanOutput = Namespace.ScanOutput;
 
-export type QueryInput = DocumentClient.QueryInput;
-export type QueryOutput = DocumentClient.QueryOutput;
+export type QueryInput = Namespace.QueryInput;
+export type QueryOutput = Namespace.QueryOutput;
 
-export type UpdateItemInput = DocumentClient.UpdateItemInput;
-export type UpdateItemOutput = DocumentClient.UpdateItemOutput;
-export type UpdateExpression = DocumentClient.UpdateExpression;
+export type UpdateItemInput = Namespace.UpdateItemInput;
+export type UpdateItemOutput = Namespace.UpdateItemOutput;
+export type UpdateExpression = Namespace.UpdateExpression;
 
-export type DeleteItemInput = DocumentClient.DeleteItemInput;
-export type DeleteItemOutput = DocumentClient.DeleteItemOutput;
+export type DeleteItemInput = Namespace.DeleteItemInput;
+export type DeleteItemOutput = Namespace.DeleteItemOutput;
 
-export type AWSError = AWS.AWSError;
-export type AWSRequest<D, E = AWSError> = AWS.Request<D, E>;
+export type AWSError = AWSLocalError;
+export type AWSRequest<D, E = AWSError> = Request<D, E>;
 
-export default AWS.DynamoDB.DocumentClient;
+export default DynamoDB.DocumentClient;
