@@ -95,6 +95,18 @@ describe('ConditionExpression', () => {
     });
   });
 
+  describe('init', () => {
+    it('from other expression', () => {
+      const names = new ExpressionAttributeNames();
+      const values = new ExpressionAttributeValues();
+      const exp = new ConditionExpression(names, values, '#foo = :foo');
+
+      const exp2 = new ConditionExpression(names, values, exp);
+
+      assert.equal(exp.serialize(), exp2.serialize());
+    });
+  });
+
   describe('init -> serialize()', () => {
     function assetSerialize(
       test: string,
@@ -304,6 +316,21 @@ describe('ConditionExpression', () => {
       assert.deepEqual(names.serialize(), { '#foo': 'foo' });
       assert.deepEqual(values.serialize(), { ':foo': 1, ':foo2': 2 });
     });
+
+    it('inner key', () => {
+      const names = new ExpressionAttributeNames();
+      const values = new ExpressionAttributeValues();
+      const exp = new ConditionExpression<{ foo: { bar: number } }>(
+        names,
+        values,
+      );
+
+      exp.between(['foo', 'bar'], 1, 2);
+
+      assert.equal(exp.serialize(), '#foo.#bar BETWEEN :bar AND :bar2');
+      assert.deepEqual(names.serialize(), { '#foo': 'foo', '#bar': 'bar' });
+      assert.deepEqual(values.serialize(), { ':bar': 1, ':bar2': 2 });
+    });
   });
 
   describe('.attributeExists', () => {
@@ -507,6 +534,35 @@ describe('ConditionExpression', () => {
       assert.equal(exp.serialize(), 'attribute_exists(#foo) OR #foo = :foo');
       assert.deepEqual(names.serialize(), { '#foo': 'foo' });
       assert.deepEqual(values.serialize(), { ':foo': 1 });
+    });
+
+    it('inner AND', () => {
+      const names = new ExpressionAttributeNames();
+      const values = new ExpressionAttributeValues();
+      const exp = new ConditionExpression<{ foo: number }>(names, values);
+
+      exp.or((cn) => cn.attributeExists('foo'));
+      exp.or((cn) => cn.gt('foo', 1).and((cn) => cn.lt('foo', 10)));
+
+      assert.equal(
+        exp.serialize(),
+        'attribute_exists(#foo) OR (#foo > :foo AND #foo < :foo2)',
+      );
+      assert.deepEqual(names.serialize(), { '#foo': 'foo' });
+      assert.deepEqual(values.serialize(), { ':foo': 1, ':foo2': 10 });
+    });
+
+    it('freestyle string', () => {
+      const names = new ExpressionAttributeNames();
+      const values = new ExpressionAttributeValues();
+      const exp = new ConditionExpression<{ foo: number }>(names, values);
+
+      exp.or((cn) => cn.attributeExists('foo'));
+      exp.or(() => '#foo = #foo');
+
+      assert.equal(exp.serialize(), 'attribute_exists(#foo) OR #foo = #foo');
+      assert.deepEqual(names.serialize(), { '#foo': 'foo' });
+      assert.deepEqual(values.serialize(), {});
     });
   });
 });
