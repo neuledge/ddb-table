@@ -23,6 +23,8 @@ export default class ScanQuery<T extends K, K extends Item> extends ItemsQuery<
       client.scan.bind(client) as QueryRequest<QueryInput, QueryOutput<T, K>>,
       params,
     );
+
+    this.handleInputUpdated();
   }
 
   public project<P extends ProjectionFields<T>>(

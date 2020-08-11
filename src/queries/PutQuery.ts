@@ -25,6 +25,8 @@ export default class PutQuery<T extends Item> extends Query<
       client.put.bind(client) as QueryRequest<QueryInput<T>, QueryOutput<T>>,
       params,
     );
+
+    this.handleInputUpdated();
   }
 
   protected handleInputUpdated(): void {

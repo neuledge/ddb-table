@@ -23,6 +23,8 @@ export default class DeleteQuery<T extends K, K extends Item> extends Query<
       client.delete.bind(client) as QueryRequest<QueryInput<K>, QueryOutput<T>>,
       params,
     );
+
+    this.handleInputUpdated();
   }
 
   protected handleInputUpdated(): void {

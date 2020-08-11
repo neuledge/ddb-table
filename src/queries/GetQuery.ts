@@ -25,6 +25,8 @@ export default class GetQuery<T extends K, K extends Item> extends Query<
       client.get.bind(client) as QueryRequest<QueryInput<K>, QueryOutput<T>>,
       params,
     );
+
+    this.handleInputUpdated();
   }
 
   protected handleInputUpdated(): void {

@@ -28,8 +28,6 @@ export default class Query<T extends Item, I extends Inputs, O> {
   protected constructor(request: QueryRequest<I, O>, params: I) {
     this.input = params;
     this.request = request;
-
-    this.handleInputUpdated();
   }
 
   protected handleInputUpdated(): void {
