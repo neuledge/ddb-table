@@ -110,6 +110,23 @@ describe('TableIndex', () => {
         },
       );
     });
+
+    it('Empty startKey', () => {
+      const table = new TableIndex<DemoItem, 'Id', 'Ver'>({
+        tableName: 'MyTable',
+        primaryKey: 'Id',
+        sortKey: 'Ver',
+        indexName: 'Test',
+      });
+
+      assert.deepEqual(
+        table.scan().startKey({ Id: '111', Ver: 5 }).startKey(null).serialize(),
+        {
+          TableName: 'MyTable',
+          IndexName: 'Test',
+        },
+      );
+    });
   });
 
   describe('.query()', () => {

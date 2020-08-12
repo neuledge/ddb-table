@@ -72,8 +72,8 @@ export default class ItemsQuery<
     return this;
   }
 
-  public startKey(key: K | Key): this {
-    this.input.ExclusiveStartKey = key;
+  public startKey(key: K | Key | null | undefined): this {
+    this.input.ExclusiveStartKey = key || undefined;
 
     return this;
   }
