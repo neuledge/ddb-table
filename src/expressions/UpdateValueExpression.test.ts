@@ -18,7 +18,7 @@ describe('UpdateValueExpression', () => {
 
       assert.equal(exp.name('foo'), '#foo');
       assert.deepEqual(names.serialize(), { '#foo': 'foo' });
-      assert.deepEqual(values.serialize(), {});
+      assert.deepEqual(values.serialize(), undefined);
     });
 
     it('inner path', () => {
@@ -33,7 +33,7 @@ describe('UpdateValueExpression', () => {
 
       assert.equal(exp.name('foo', 'bar'), '#foo.#bar');
       assert.deepEqual(names.serialize(), { '#foo': 'foo', '#bar': 'bar' });
-      assert.deepEqual(values.serialize(), {});
+      assert.deepEqual(values.serialize(), undefined);
     });
   });
 
@@ -49,7 +49,7 @@ describe('UpdateValueExpression', () => {
       );
 
       assert.equal(exp.value(1), ':foo');
-      assert.deepEqual(names.serialize(), {});
+      assert.deepEqual(names.serialize(), undefined);
       assert.deepEqual(values.serialize(), { ':foo': 1 });
     });
   });
@@ -66,7 +66,7 @@ describe('UpdateValueExpression', () => {
       );
 
       assert.equal(exp.inc(3), '#foo + :foo');
-      assert.deepEqual(names.serialize(), {});
+      assert.deepEqual(names.serialize(), undefined);
       assert.deepEqual(values.serialize(), { ':foo': 3 });
     });
 
@@ -99,7 +99,7 @@ describe('UpdateValueExpression', () => {
       );
 
       assert.equal(exp.dec(3), '#foo - :foo');
-      assert.deepEqual(names.serialize(), {});
+      assert.deepEqual(names.serialize(), undefined);
       assert.deepEqual(values.serialize(), { ':foo': 3 });
     });
 
@@ -132,7 +132,7 @@ describe('UpdateValueExpression', () => {
       );
 
       assert.equal(exp.listAppend([3]), 'list_append(#foo, :foo)');
-      assert.deepEqual(names.serialize(), {});
+      assert.deepEqual(names.serialize(), undefined);
       assert.deepEqual(values.serialize(), { ':foo': [3] });
     });
 
@@ -165,7 +165,7 @@ describe('UpdateValueExpression', () => {
       );
 
       assert.equal(exp.ifNotExists(3), 'if_not_exists(#foo, :foo)');
-      assert.deepEqual(names.serialize(), {});
+      assert.deepEqual(names.serialize(), undefined);
       assert.deepEqual(values.serialize(), { ':foo': 3 });
     });
   });

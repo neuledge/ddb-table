@@ -1,3 +1,5 @@
+import { isEmpty } from '../helpers/object';
+
 export type ExpressionAttributesMap<T> = { [key: string]: T };
 
 export default class ExpressionAttributes<T> {
@@ -24,7 +26,11 @@ export default class ExpressionAttributes<T> {
     return key;
   }
 
-  public serialize(): ExpressionAttributesMap<T> {
+  public serialize(): ExpressionAttributesMap<T> | undefined {
+    if (isEmpty(this.attributesMap)) {
+      return undefined;
+    }
+
     return this.attributesMap;
   }
 }

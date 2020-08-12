@@ -35,8 +35,6 @@ describe('Table', () => {
       assert.deepEqual(index.scan().serialize(), {
         TableName: 'MyTable',
         IndexName: 'Id-foo',
-        ExpressionAttributeNames: {},
-        ExpressionAttributeValues: {},
       });
     });
   });
@@ -69,7 +67,6 @@ describe('Table', () => {
           ExpressionAttributeNames: {
             '#Id': 'Id',
           },
-          ExpressionAttributeValues: {},
           Item: {
             Id: '12',
             Ver: 2,

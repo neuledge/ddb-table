@@ -66,8 +66,6 @@ describe('TableIndex', () => {
 
       assert.deepEqual(table.scan().serialize(), {
         TableName: 'MyTable',
-        ExpressionAttributeNames: {},
-        ExpressionAttributeValues: {},
       });
     });
 

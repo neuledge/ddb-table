@@ -136,7 +136,7 @@ describe('ConditionExpression', () => {
 
       assert.equal(exp.name('foo'), '#foo');
       assert.deepEqual(names.serialize(), { '#foo': 'foo' });
-      assert.deepEqual(values.serialize(), {});
+      assert.deepEqual(values.serialize(), undefined);
     });
 
     it('inner path', () => {
@@ -149,7 +149,7 @@ describe('ConditionExpression', () => {
 
       assert.equal(exp.name('foo', 'bar'), '#foo.#bar');
       assert.deepEqual(names.serialize(), { '#foo': 'foo', '#bar': 'bar' });
-      assert.deepEqual(values.serialize(), {});
+      assert.deepEqual(values.serialize(), undefined);
     });
   });
 
@@ -160,7 +160,7 @@ describe('ConditionExpression', () => {
       const exp = new ConditionExpression<{ foo: number }>(names, values);
 
       assert.equal(exp.value('foo', 1), ':foo');
-      assert.deepEqual(names.serialize(), {});
+      assert.deepEqual(names.serialize(), undefined);
       assert.deepEqual(values.serialize(), { ':foo': 1 });
     });
 
@@ -174,7 +174,7 @@ describe('ConditionExpression', () => {
 
       assert.equal(exp.value('foo', 1), ':foo');
       assert.equal(exp.value('foo', 2), ':foo2');
-      assert.deepEqual(names.serialize(), {});
+      assert.deepEqual(names.serialize(), undefined);
       assert.deepEqual(values.serialize(), { ':foo': 1, ':foo2': 2 });
     });
   });
@@ -300,7 +300,7 @@ describe('ConditionExpression', () => {
 
       assert.equal(exp.serialize(), '#foo <> size(#foo)');
       assert.deepEqual(names.serialize(), { '#foo': 'foo' });
-      assert.deepEqual(values.serialize(), {});
+      assert.deepEqual(values.serialize(), undefined);
     });
   });
 
@@ -343,7 +343,7 @@ describe('ConditionExpression', () => {
 
       assert.equal(exp.serialize(), 'attribute_exists(#foo)');
       assert.deepEqual(names.serialize(), { '#foo': 'foo' });
-      assert.deepEqual(values.serialize(), {});
+      assert.deepEqual(values.serialize(), undefined);
     });
 
     it('inner path', () => {
@@ -358,7 +358,7 @@ describe('ConditionExpression', () => {
 
       assert.equal(exp.serialize(), 'attribute_exists(#foo.#bar)');
       assert.deepEqual(names.serialize(), { '#foo': 'foo', '#bar': 'bar' });
-      assert.deepEqual(values.serialize(), {});
+      assert.deepEqual(values.serialize(), undefined);
     });
   });
 
@@ -372,7 +372,7 @@ describe('ConditionExpression', () => {
 
       assert.equal(exp.serialize(), 'attribute_not_exists(#foo)');
       assert.deepEqual(names.serialize(), { '#foo': 'foo' });
-      assert.deepEqual(values.serialize(), {});
+      assert.deepEqual(values.serialize(), undefined);
     });
 
     it('inner path', () => {
@@ -387,7 +387,7 @@ describe('ConditionExpression', () => {
 
       assert.equal(exp.serialize(), 'attribute_not_exists(#foo.#bar)');
       assert.deepEqual(names.serialize(), { '#foo': 'foo', '#bar': 'bar' });
-      assert.deepEqual(values.serialize(), {});
+      assert.deepEqual(values.serialize(), undefined);
     });
   });
 
@@ -488,7 +488,7 @@ describe('ConditionExpression', () => {
 
       assert.equal(exp.serialize(), 'size(#foo)');
       assert.deepEqual(names.serialize(), { '#foo': 'foo' });
-      assert.deepEqual(values.serialize(), {});
+      assert.deepEqual(values.serialize(), undefined);
     });
 
     it('inner path', () => {
@@ -503,7 +503,7 @@ describe('ConditionExpression', () => {
 
       assert.equal(exp.serialize(), 'size(#foo.#bar)');
       assert.deepEqual(names.serialize(), { '#foo': 'foo', '#bar': 'bar' });
-      assert.deepEqual(values.serialize(), {});
+      assert.deepEqual(values.serialize(), undefined);
     });
   });
 
@@ -562,7 +562,7 @@ describe('ConditionExpression', () => {
 
       assert.equal(exp.serialize(), 'attribute_exists(#foo) OR #foo = #foo');
       assert.deepEqual(names.serialize(), { '#foo': 'foo' });
-      assert.deepEqual(values.serialize(), {});
+      assert.deepEqual(values.serialize(), undefined);
     });
   });
 });

@@ -6,7 +6,7 @@ describe('ExpressionAttributes', () => {
   it('Empty constructor', () => {
     const attrs = new ExpressionAttributes();
 
-    assert.deepEqual(attrs.serialize(), {});
+    assert.deepEqual(attrs.serialize(), undefined);
   });
 
   it('constructor init', () => {
