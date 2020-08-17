@@ -63,7 +63,7 @@ export default class QueryQuery<T extends K, K extends Item> extends ItemsQuery<
     return super.project(fields);
   }
 
-  public keyCondition(fn: ConditionGenerator<T>): this {
+  public keyCondition(fn: ConditionGenerator<K>): this {
     this.keyConditions.and(fn);
     return this;
   }
