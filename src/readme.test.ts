@@ -20,8 +20,17 @@ describe('README.md', () => {
     AWSMock.mock(
       'DynamoDB.DocumentClient',
       'query',
-      (params: unknown, callback: (err: Error | null, item: unknown) => void) =>
-        callback(null, params),
+      (
+        params: Record<string, undefined>,
+        callback: (err: Error | null, item: unknown) => void,
+      ) =>
+        callback(null, {
+          Items: [
+            { i: 0, ...params },
+            { i: 1, ...params },
+          ],
+          LastEvaluatedKey: params.ExclusiveStartKey ? undefined : { key: 2 },
+        }),
     );
   });
 
@@ -129,35 +138,41 @@ describe('README.md', () => {
     const now = Date.now();
     const hourAgo = now - 3600e3;
 
-    const queryRes = await outboxIndex
+    const it = outboxIndex
       .query()
       .keyCondition((cond) => cond.eq('senderId', 'john@gmail.com'))
       .keyCondition((cond) => cond.between('timestamp', hourAgo, now))
       .project({ threadId: 1, message: 1 })
       .reverseIndex()
-      .exec();
+      .entries();
 
-    assert.deepEqual(queryRes as never, {
-      TableName: 'Messages',
-      IndexName: 'senderId-timestamp-index',
-      KeyConditionExpression:
-        '#senderId = :senderId' +
-        ' AND #timestamp BETWEEN :timestamp AND :timestamp2',
-      ProjectionExpression: '#threadId, #message',
-      ExpressionAttributeNames: {
-        '#message': 'message',
-        '#senderId': 'senderId',
-        '#threadId': 'threadId',
-        '#timestamp': 'timestamp',
-      },
-      ExpressionAttributeValues: {
-        ':senderId': 'john@gmail.com',
-        ':timestamp': hourAgo,
-        ':timestamp2': now,
-      },
-      ScanIndexForward: false,
-    });
+    let i = 0;
+    for await (const item of it) {
+      assert.deepEqual(item as never, {
+        i: i % 2,
+        TableName: 'Messages',
+        IndexName: 'senderId-timestamp-index',
+        KeyConditionExpression:
+          '#senderId = :senderId' +
+          ' AND #timestamp BETWEEN :timestamp AND :timestamp2',
+        ProjectionExpression: '#threadId, #message',
+        ExpressionAttributeNames: {
+          '#message': 'message',
+          '#senderId': 'senderId',
+          '#threadId': 'threadId',
+          '#timestamp': 'timestamp',
+        },
+        ExpressionAttributeValues: {
+          ':senderId': 'john@gmail.com',
+          ':timestamp': hourAgo,
+          ':timestamp2': now,
+        },
+        ScanIndexForward: false,
+        ...(i >= 2 ? { ExclusiveStartKey: { key: 2 } } : null),
+      });
 
-    // console.log(queryRes.Items);
+      i += 1;
+    }
+    assert.equal(i, 4);
   });
 });

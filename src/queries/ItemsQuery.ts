@@ -12,7 +12,7 @@ export default class ItemsQuery<
   T extends K,
   K extends Item,
   I extends ScanInput | QueryInput,
-  O
+  O extends { Items?: T[]; LastEvaluatedKey?: K }
 > extends Query<T, I, O> {
   protected values!: ExpressionAttributeValues;
   protected projection!: ProjectionExpression<T, K>;
@@ -76,5 +76,17 @@ export default class ItemsQuery<
     this.input.ExclusiveStartKey = key || undefined;
 
     return this;
+  }
+
+  public async *entries(): AsyncIterableIterator<T> {
+    do {
+      const { Items, LastEvaluatedKey } = await this.exec();
+
+      if (Items) {
+        yield* Items;
+      }
+
+      this.startKey(LastEvaluatedKey);
+    } while (this.input.ExclusiveStartKey);
   }
 }
