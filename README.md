@@ -107,15 +107,17 @@ const outboxIndex = messages.index<
   'timestamp'
 >('senderId-timestamp-index', 'senderId', 'timestamp');
 
-const queryRes = await outboxIndex
+const it = outboxIndex
   .query()
   .keyCondition(cond => cond.eq('senderId', 'john@gmail.com'))
   .keyCondition(cond => cond.between('timestamp', Date.now() - 3600e3, Date.now()))
   .project({ threadId: 1, message: 1 })
   .reverseIndex()
-  .exec();
+  .entries();
 
-console.log(queryRes.Items);
+for await (const item of it) {
+  console.log(item);
+}
 ```
 
 <br>
