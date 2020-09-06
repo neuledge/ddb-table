@@ -26,8 +26,8 @@ export type TableKey<T, H extends keyof T, S extends keyof T = never> = {
 export default class TableIndex<
   T extends Item,
   H extends keyof T,
-  S extends keyof T = never,
-  P extends keyof T = keyof T
+  S extends keyof T = never
+  // P extends keyof T = keyof T
 > {
   public readonly name: string;
   public readonly indexName?: string;
