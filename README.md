@@ -6,8 +6,8 @@
   <a href="https://www.npmjs.org/package/ddb-table">
     <img src="http://img.shields.io/npm/v/ddb-table.svg" alt="View On NPM">
   </a>
-  <a href="https://travis-ci.org/neuledge/ddb-table">
-    <img src="https://travis-ci.org/neuledge/ddb-table.svg?branch=master" alt="Build Status">
+  <a href="https://travis-ci.com/neuledge/ddb-table">
+    <img src="https://travis-ci.com/neuledge/ddb-table.svg?branch=master" alt="Build Status">
   </a>
   <a href="https://depfu.com/github/neuledge/ddb-table?project_id=13055">
     <img src="https://badges.depfu.com/badges/c06bc1e007e8b7f804d8563a56bb2ced/overview.svg" alt="Dependency Status">
