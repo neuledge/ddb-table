@@ -150,7 +150,7 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
     value: SetValue<T, unknown>,
   ): this {
-    this.update.set(path as [K1, K2, K3, K4, K5, K6, K7, K8], value);
+    this.update.set(path as [K1, K2, K3, K4, K5, K6, K7, K8], value as never);
     return this;
   }
 
@@ -243,7 +243,7 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
     value: unknown,
   ): this {
-    this.update.add(path as [K1, K2, K3, K4, K5, K6, K7, K8], value);
+    this.update.add(path as [K1, K2, K3, K4, K5, K6, K7, K8], value as never);
     return this;
   }
 
@@ -325,7 +325,10 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
     value: unknown,
   ): this {
-    this.update.delete(path as [K1, K2, K3, K4, K5, K6, K7, K8], value);
+    this.update.delete(
+      path as [K1, K2, K3, K4, K5, K6, K7, K8],
+      value as never,
+    );
     return this;
   }
 

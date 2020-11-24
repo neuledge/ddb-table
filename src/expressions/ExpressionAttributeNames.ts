@@ -1,8 +1,8 @@
 import ExpressionAttributes from './ExpressionAttributes';
 
-export default class ExpressionAttributeNames<T> extends ExpressionAttributes<
-  string
-> {
+export default class ExpressionAttributeNames<
+  T
+> extends ExpressionAttributes<string> {
   public static escape(name: string): string {
     return `#${name.replace(/[^\w_]/, '')}`;
   }
