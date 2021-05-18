@@ -12,7 +12,7 @@ export default class ItemsQuery<
   T extends K,
   K extends Item,
   I extends ScanInput | QueryInput,
-  O extends { Items?: T[]; LastEvaluatedKey?: K }
+  O extends { Items?: T[]; LastEvaluatedKey?: K },
 > extends Query<T, I, O> {
   protected values!: ExpressionAttributeValues;
   protected projection!: ProjectionExpression<T, K>;
