@@ -13,7 +13,7 @@ export type TableOptions<H, S> = Omit<TableIndexOptions<H, S>, 'indexName'>;
 export default class Table<
   T extends Item,
   H extends keyof T,
-  S extends keyof T = never
+  S extends keyof T = never,
 > extends TableIndex<T, H, S> {
   public constructor(
     // eslint-disable-next-line @typescript-eslint/ban-types
@@ -34,15 +34,15 @@ export default class Table<
   public index<
     P extends Partial<T>,
     H extends keyof P,
-    S extends keyof P = never
+    S extends keyof P = never,
   >(name: string, primaryKey: H, sortKey?: S): TableIndex<P, H, S> {
-    return new TableIndex(({
+    return new TableIndex({
       tableName: this.name,
       indexName: name,
       primaryKey,
       sortKey,
       documentClient: this.client,
-    } as unknown) as TableIndexOptionsArg<H, S>);
+    } as unknown as TableIndexOptionsArg<H, S>);
   }
 
   public put(item: T): PutQuery<T> {

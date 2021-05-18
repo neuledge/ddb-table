@@ -147,7 +147,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     ...path: [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]]
   ): string {
@@ -169,20 +169,20 @@ export default class ConditionExpression<T> {
   public eq<
     K1 extends keyof T,
     K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2]
+    K3 extends keyof T[K1][K2],
   >(path: [K1, K2, K3], value: ValueFn<T, T[K1][K2][K3]>): this;
   public eq<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3]
+    K4 extends keyof T[K1][K2][K3],
   >(path: [K1, K2, K3, K4], value: ValueFn<T, T[K1][K2][K3][K4]>): this;
   public eq<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4]
+    K5 extends keyof T[K1][K2][K3][K4],
   >(path: [K1, K2, K3, K4, K5], value: ValueFn<T, T[K1][K2][K3][K4][K5]>): this;
   public eq<
     K1 extends keyof T,
@@ -190,7 +190,7 @@ export default class ConditionExpression<T> {
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5]
+    K6 extends keyof T[K1][K2][K3][K4][K5],
   >(
     path: [K1, K2, K3, K4, K5, K6],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6]>,
@@ -202,7 +202,7 @@ export default class ConditionExpression<T> {
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
-    K7 extends keyof T[K1][K2][K3][K4][K5][K6]
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
   >(
     path: [K1, K2, K3, K4, K5, K6, K7],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6][K7]>,
@@ -215,7 +215,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: [K1, K2, K3, K4, K5, K6, K7, K8],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6][K7][K8]>,
@@ -228,7 +228,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
     value: ValueFn<T, unknown>,
@@ -251,20 +251,20 @@ export default class ConditionExpression<T> {
   public nq<
     K1 extends keyof T,
     K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2]
+    K3 extends keyof T[K1][K2],
   >(path: [K1, K2, K3], value: ValueFn<T, T[K1][K2][K3]>): this;
   public nq<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3]
+    K4 extends keyof T[K1][K2][K3],
   >(path: [K1, K2, K3, K4], value: ValueFn<T, T[K1][K2][K3][K4]>): this;
   public nq<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4]
+    K5 extends keyof T[K1][K2][K3][K4],
   >(path: [K1, K2, K3, K4, K5], value: ValueFn<T, T[K1][K2][K3][K4][K5]>): this;
   public nq<
     K1 extends keyof T,
@@ -272,7 +272,7 @@ export default class ConditionExpression<T> {
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5]
+    K6 extends keyof T[K1][K2][K3][K4][K5],
   >(
     path: [K1, K2, K3, K4, K5, K6],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6]>,
@@ -284,7 +284,7 @@ export default class ConditionExpression<T> {
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
-    K7 extends keyof T[K1][K2][K3][K4][K5][K6]
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
   >(
     path: [K1, K2, K3, K4, K5, K6, K7],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6][K7]>,
@@ -297,7 +297,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: [K1, K2, K3, K4, K5, K6, K7, K8],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6][K7][K8]>,
@@ -310,7 +310,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
     value: ValueFn<T, unknown>,
@@ -333,20 +333,20 @@ export default class ConditionExpression<T> {
   public lt<
     K1 extends keyof T,
     K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2]
+    K3 extends keyof T[K1][K2],
   >(path: [K1, K2, K3], value: ValueFn<T, T[K1][K2][K3]>): this;
   public lt<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3]
+    K4 extends keyof T[K1][K2][K3],
   >(path: [K1, K2, K3, K4], value: ValueFn<T, T[K1][K2][K3][K4]>): this;
   public lt<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4]
+    K5 extends keyof T[K1][K2][K3][K4],
   >(path: [K1, K2, K3, K4, K5], value: ValueFn<T, T[K1][K2][K3][K4][K5]>): this;
   public lt<
     K1 extends keyof T,
@@ -354,7 +354,7 @@ export default class ConditionExpression<T> {
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5]
+    K6 extends keyof T[K1][K2][K3][K4][K5],
   >(
     path: [K1, K2, K3, K4, K5, K6],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6]>,
@@ -366,7 +366,7 @@ export default class ConditionExpression<T> {
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
-    K7 extends keyof T[K1][K2][K3][K4][K5][K6]
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
   >(
     path: [K1, K2, K3, K4, K5, K6, K7],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6][K7]>,
@@ -379,7 +379,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: [K1, K2, K3, K4, K5, K6, K7, K8],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6][K7][K8]>,
@@ -392,7 +392,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
     value: ValueFn<T, unknown>,
@@ -415,20 +415,20 @@ export default class ConditionExpression<T> {
   public lte<
     K1 extends keyof T,
     K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2]
+    K3 extends keyof T[K1][K2],
   >(path: [K1, K2, K3], value: ValueFn<T, T[K1][K2][K3]>): this;
   public lte<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3]
+    K4 extends keyof T[K1][K2][K3],
   >(path: [K1, K2, K3, K4], value: ValueFn<T, T[K1][K2][K3][K4]>): this;
   public lte<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4]
+    K5 extends keyof T[K1][K2][K3][K4],
   >(path: [K1, K2, K3, K4, K5], value: ValueFn<T, T[K1][K2][K3][K4][K5]>): this;
   public lte<
     K1 extends keyof T,
@@ -436,7 +436,7 @@ export default class ConditionExpression<T> {
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5]
+    K6 extends keyof T[K1][K2][K3][K4][K5],
   >(
     path: [K1, K2, K3, K4, K5, K6],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6]>,
@@ -448,7 +448,7 @@ export default class ConditionExpression<T> {
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
-    K7 extends keyof T[K1][K2][K3][K4][K5][K6]
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
   >(
     path: [K1, K2, K3, K4, K5, K6, K7],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6][K7]>,
@@ -461,7 +461,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: [K1, K2, K3, K4, K5, K6, K7, K8],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6][K7][K8]>,
@@ -474,7 +474,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
     value: ValueFn<T, unknown>,
@@ -497,20 +497,20 @@ export default class ConditionExpression<T> {
   public gt<
     K1 extends keyof T,
     K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2]
+    K3 extends keyof T[K1][K2],
   >(path: [K1, K2, K3], value: ValueFn<T, T[K1][K2][K3]>): this;
   public gt<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3]
+    K4 extends keyof T[K1][K2][K3],
   >(path: [K1, K2, K3, K4], value: ValueFn<T, T[K1][K2][K3][K4]>): this;
   public gt<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4]
+    K5 extends keyof T[K1][K2][K3][K4],
   >(path: [K1, K2, K3, K4, K5], value: ValueFn<T, T[K1][K2][K3][K4][K5]>): this;
   public gt<
     K1 extends keyof T,
@@ -518,7 +518,7 @@ export default class ConditionExpression<T> {
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5]
+    K6 extends keyof T[K1][K2][K3][K4][K5],
   >(
     path: [K1, K2, K3, K4, K5, K6],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6]>,
@@ -530,7 +530,7 @@ export default class ConditionExpression<T> {
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
-    K7 extends keyof T[K1][K2][K3][K4][K5][K6]
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
   >(
     path: [K1, K2, K3, K4, K5, K6, K7],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6][K7]>,
@@ -543,7 +543,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: [K1, K2, K3, K4, K5, K6, K7, K8],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6][K7][K8]>,
@@ -556,7 +556,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
     value: ValueFn<T, unknown>,
@@ -579,20 +579,20 @@ export default class ConditionExpression<T> {
   public gte<
     K1 extends keyof T,
     K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2]
+    K3 extends keyof T[K1][K2],
   >(path: [K1, K2, K3], value: ValueFn<T, T[K1][K2][K3]>): this;
   public gte<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3]
+    K4 extends keyof T[K1][K2][K3],
   >(path: [K1, K2, K3, K4], value: ValueFn<T, T[K1][K2][K3][K4]>): this;
   public gte<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4]
+    K5 extends keyof T[K1][K2][K3][K4],
   >(path: [K1, K2, K3, K4, K5], value: ValueFn<T, T[K1][K2][K3][K4][K5]>): this;
   public gte<
     K1 extends keyof T,
@@ -600,7 +600,7 @@ export default class ConditionExpression<T> {
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5]
+    K6 extends keyof T[K1][K2][K3][K4][K5],
   >(
     path: [K1, K2, K3, K4, K5, K6],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6]>,
@@ -612,7 +612,7 @@ export default class ConditionExpression<T> {
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
-    K7 extends keyof T[K1][K2][K3][K4][K5][K6]
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
   >(
     path: [K1, K2, K3, K4, K5, K6, K7],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6][K7]>,
@@ -625,7 +625,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: [K1, K2, K3, K4, K5, K6, K7, K8],
     value: ValueFn<T, T[K1][K2][K3][K4][K5][K6][K7][K8]>,
@@ -638,7 +638,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
     value: ValueFn<T, unknown>,
@@ -663,7 +663,7 @@ export default class ConditionExpression<T> {
   public comparator<
     K1 extends keyof T,
     K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2]
+    K3 extends keyof T[K1][K2],
   >(
     comparator: Comparator,
     path: [K1, K2, K3],
@@ -673,7 +673,7 @@ export default class ConditionExpression<T> {
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3]
+    K4 extends keyof T[K1][K2][K3],
   >(
     comparator: Comparator,
     path: [K1, K2, K3, K4],
@@ -684,7 +684,7 @@ export default class ConditionExpression<T> {
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4]
+    K5 extends keyof T[K1][K2][K3][K4],
   >(
     comparator: Comparator,
     path: [K1, K2, K3, K4, K5],
@@ -696,7 +696,7 @@ export default class ConditionExpression<T> {
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5]
+    K6 extends keyof T[K1][K2][K3][K4][K5],
   >(
     comparator: Comparator,
     path: [K1, K2, K3, K4, K5, K6],
@@ -709,7 +709,7 @@ export default class ConditionExpression<T> {
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
-    K7 extends keyof T[K1][K2][K3][K4][K5][K6]
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
   >(
     comparator: Comparator,
     path: [K1, K2, K3, K4, K5, K6, K7],
@@ -723,7 +723,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     comparator: Comparator,
     path: [K1, K2, K3, K4, K5, K6, K7, K8],
@@ -737,7 +737,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     comparator: Comparator,
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
@@ -766,7 +766,7 @@ export default class ConditionExpression<T> {
   public between<
     K1 extends keyof T,
     K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2]
+    K3 extends keyof T[K1][K2],
   >(
     path: [K1, K2, K3],
     from: ValueFn<T, T[K1][K2][K3]>,
@@ -776,7 +776,7 @@ export default class ConditionExpression<T> {
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3]
+    K4 extends keyof T[K1][K2][K3],
   >(
     path: [K1, K2, K3, K4],
     from: ValueFn<T, T[K1][K2][K3][K4]>,
@@ -787,7 +787,7 @@ export default class ConditionExpression<T> {
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4]
+    K5 extends keyof T[K1][K2][K3][K4],
   >(
     path: [K1, K2, K3, K4, K5],
     from: ValueFn<T, T[K1][K2][K3][K4][K5]>,
@@ -799,7 +799,7 @@ export default class ConditionExpression<T> {
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5]
+    K6 extends keyof T[K1][K2][K3][K4][K5],
   >(
     path: [K1, K2, K3, K4, K5, K6],
     from: ValueFn<T, T[K1][K2][K3][K4][K5][K6]>,
@@ -812,7 +812,7 @@ export default class ConditionExpression<T> {
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
-    K7 extends keyof T[K1][K2][K3][K4][K5][K6]
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
   >(
     path: [K1, K2, K3, K4, K5, K6, K7],
     from: ValueFn<T, T[K1][K2][K3][K4][K5][K6][K7]>,
@@ -826,7 +826,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: [K1, K2, K3, K4, K5, K6, K7, K8],
     from: ValueFn<T, T[K1][K2][K3][K4][K5][K6][K7][K8]>,
@@ -840,7 +840,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
     from: ValueFn<T, unknown>,
@@ -864,20 +864,20 @@ export default class ConditionExpression<T> {
   public attributeExists<
     K1 extends keyof T,
     K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2]
+    K3 extends keyof T[K1][K2],
   >(path: [K1, K2, K3]): this;
   public attributeExists<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3]
+    K4 extends keyof T[K1][K2][K3],
   >(path: [K1, K2, K3, K4]): this;
   public attributeExists<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4]
+    K5 extends keyof T[K1][K2][K3][K4],
   >(path: [K1, K2, K3, K4, K5]): this;
   public attributeExists<
     K1 extends keyof T,
@@ -885,7 +885,7 @@ export default class ConditionExpression<T> {
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5]
+    K6 extends keyof T[K1][K2][K3][K4][K5],
   >(path: [K1, K2, K3, K4, K5, K6]): this;
   public attributeExists<
     K1 extends keyof T,
@@ -894,7 +894,7 @@ export default class ConditionExpression<T> {
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
-    K7 extends keyof T[K1][K2][K3][K4][K5][K6]
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
   >(path: [K1, K2, K3, K4, K5, K6, K7]): this;
   public attributeExists<
     K1 extends keyof T,
@@ -904,7 +904,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(path: [K1, K2, K3, K4, K5, K6, K7, K8]): this;
   public attributeExists<
     K1 extends keyof T,
@@ -914,7 +914,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
   ): this {
@@ -932,20 +932,20 @@ export default class ConditionExpression<T> {
   public attributeNotExists<
     K1 extends keyof T,
     K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2]
+    K3 extends keyof T[K1][K2],
   >(path: [K1, K2, K3]): this;
   public attributeNotExists<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3]
+    K4 extends keyof T[K1][K2][K3],
   >(path: [K1, K2, K3, K4]): this;
   public attributeNotExists<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4]
+    K5 extends keyof T[K1][K2][K3][K4],
   >(path: [K1, K2, K3, K4, K5]): this;
   public attributeNotExists<
     K1 extends keyof T,
@@ -953,7 +953,7 @@ export default class ConditionExpression<T> {
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5]
+    K6 extends keyof T[K1][K2][K3][K4][K5],
   >(path: [K1, K2, K3, K4, K5, K6]): this;
   public attributeNotExists<
     K1 extends keyof T,
@@ -962,7 +962,7 @@ export default class ConditionExpression<T> {
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
-    K7 extends keyof T[K1][K2][K3][K4][K5][K6]
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
   >(path: [K1, K2, K3, K4, K5, K6, K7]): this;
   public attributeNotExists<
     K1 extends keyof T,
@@ -972,7 +972,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(path: [K1, K2, K3, K4, K5, K6, K7, K8]): this;
   public attributeNotExists<
     K1 extends keyof T,
@@ -982,7 +982,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
   ): this {
@@ -1004,20 +1004,20 @@ export default class ConditionExpression<T> {
   public attributeType<
     K1 extends keyof T,
     K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2]
+    K3 extends keyof T[K1][K2],
   >(path: [K1, K2, K3], type: AttributeType): this;
   public attributeType<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3]
+    K4 extends keyof T[K1][K2][K3],
   >(path: [K1, K2, K3, K4], type: AttributeType): this;
   public attributeType<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4]
+    K5 extends keyof T[K1][K2][K3][K4],
   >(path: [K1, K2, K3, K4, K5], type: AttributeType): this;
   public attributeType<
     K1 extends keyof T,
@@ -1025,7 +1025,7 @@ export default class ConditionExpression<T> {
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5]
+    K6 extends keyof T[K1][K2][K3][K4][K5],
   >(path: [K1, K2, K3, K4, K5, K6], type: AttributeType): this;
   public attributeType<
     K1 extends keyof T,
@@ -1034,7 +1034,7 @@ export default class ConditionExpression<T> {
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
-    K7 extends keyof T[K1][K2][K3][K4][K5][K6]
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
   >(path: [K1, K2, K3, K4, K5, K6, K7], type: AttributeType): this;
   public attributeType<
     K1 extends keyof T,
@@ -1044,7 +1044,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(path: [K1, K2, K3, K4, K5, K6, K7, K8], type: AttributeType): this;
   public attributeType<
     K1 extends keyof T,
@@ -1054,7 +1054,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
     type: AttributeType,
@@ -1081,20 +1081,20 @@ export default class ConditionExpression<T> {
   public beginsWith<
     K1 extends keyof T,
     K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2]
+    K3 extends keyof T[K1][K2],
   >(path: [K1, K2, K3], substr: string): this;
   public beginsWith<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3]
+    K4 extends keyof T[K1][K2][K3],
   >(path: [K1, K2, K3, K4], substr: string): this;
   public beginsWith<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4]
+    K5 extends keyof T[K1][K2][K3][K4],
   >(path: [K1, K2, K3, K4, K5], substr: string): this;
   public beginsWith<
     K1 extends keyof T,
@@ -1102,7 +1102,7 @@ export default class ConditionExpression<T> {
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5]
+    K6 extends keyof T[K1][K2][K3][K4][K5],
   >(path: [K1, K2, K3, K4, K5, K6], substr: string): this;
   public beginsWith<
     K1 extends keyof T,
@@ -1111,7 +1111,7 @@ export default class ConditionExpression<T> {
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
-    K7 extends keyof T[K1][K2][K3][K4][K5][K6]
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
   >(path: [K1, K2, K3, K4, K5, K6, K7], substr: string): this;
   public beginsWith<
     K1 extends keyof T,
@@ -1121,7 +1121,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(path: [K1, K2, K3, K4, K5, K6, K7, K8], substr: string): this;
   public beginsWith<
     K1 extends keyof T,
@@ -1131,7 +1131,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
     substr: string,
@@ -1155,20 +1155,20 @@ export default class ConditionExpression<T> {
   public contains<
     K1 extends keyof T,
     K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2]
+    K3 extends keyof T[K1][K2],
   >(path: [K1, K2, K3], operand: string): this;
   public contains<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3]
+    K4 extends keyof T[K1][K2][K3],
   >(path: [K1, K2, K3, K4], operand: string): this;
   public contains<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4]
+    K5 extends keyof T[K1][K2][K3][K4],
   >(path: [K1, K2, K3, K4, K5], operand: string): this;
   public contains<
     K1 extends keyof T,
@@ -1176,7 +1176,7 @@ export default class ConditionExpression<T> {
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5]
+    K6 extends keyof T[K1][K2][K3][K4][K5],
   >(path: [K1, K2, K3, K4, K5, K6], operand: string): this;
   public contains<
     K1 extends keyof T,
@@ -1185,7 +1185,7 @@ export default class ConditionExpression<T> {
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
-    K7 extends keyof T[K1][K2][K3][K4][K5][K6]
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
   >(path: [K1, K2, K3, K4, K5, K6, K7], operand: string): this;
   public contains<
     K1 extends keyof T,
@@ -1195,7 +1195,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(path: [K1, K2, K3, K4, K5, K6, K7, K8], operand: string): this;
   public contains<
     K1 extends keyof T,
@@ -1205,7 +1205,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
     operand: string,
@@ -1226,20 +1226,20 @@ export default class ConditionExpression<T> {
   public size<
     K1 extends keyof T,
     K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2]
+    K3 extends keyof T[K1][K2],
   >(path: [K1, K2, K3]): this;
   public size<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3]
+    K4 extends keyof T[K1][K2][K3],
   >(path: [K1, K2, K3, K4]): this;
   public size<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4]
+    K5 extends keyof T[K1][K2][K3][K4],
   >(path: [K1, K2, K3, K4, K5]): this;
   public size<
     K1 extends keyof T,
@@ -1247,7 +1247,7 @@ export default class ConditionExpression<T> {
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5]
+    K6 extends keyof T[K1][K2][K3][K4][K5],
   >(path: [K1, K2, K3, K4, K5, K6]): this;
   public size<
     K1 extends keyof T,
@@ -1256,7 +1256,7 @@ export default class ConditionExpression<T> {
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
-    K7 extends keyof T[K1][K2][K3][K4][K5][K6]
+    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
   >(path: [K1, K2, K3, K4, K5, K6, K7]): this;
   public size<
     K1 extends keyof T,
@@ -1266,7 +1266,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(path: [K1, K2, K3, K4, K5, K6, K7, K8]): this;
   public size<
     K1 extends keyof T,
@@ -1276,7 +1276,7 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
   ): this {

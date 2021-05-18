@@ -36,7 +36,7 @@ export default class UpdateValueExpression<T, V> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7]
+    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     ...path: [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]]
   ): string {
