@@ -63,9 +63,9 @@
     "@types/chai": "^4.2.21",
     "@types/chai-as-promised": "^7.1.4",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^16.4.13",
-    "@typescript-eslint/eslint-plugin": "^4.29.0",
-    "@typescript-eslint/parser": "^4.29.0",
+    "@types/node": "^16.6.1",
+    "@typescript-eslint/eslint-plugin": "^4.29.1",
+    "@typescript-eslint/parser": "^4.29.1",
     "aws-sdk": "^2.960.0",
     "aws-sdk-mock": "^5.2.1",
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
@@ -80,7 +80,7 @@
     "mocha": "^9.0.3",
     "nyc": "^15.1.0",
     "prettier": "^2.3.2",
-    "ts-node": "^10.1.0",
+    "ts-node": "^10.2.0",
     "typescript": "^4.3.5"
   },
   "peerDependencies": {
