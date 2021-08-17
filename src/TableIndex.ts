@@ -15,9 +15,9 @@ export type TableIndexOptionsArg<H, S> = TableIndexOptions<H, S> &
 
 export type TableKeyArgs<T, H extends keyof T, S extends keyof T = never> = [
   S,
-] extends [keyof T]
-  ? [T[H], T[S]]
-  : [T[H], undefined?];
+] extends [never]
+  ? [T[H], undefined?]
+  : [T[H], T[S]];
 
 export type TableKey<T, H extends keyof T, S extends keyof T = never> = {
   [K in keyof T & (H | S)]: [K] extends [H | S] ? T[K] : never;

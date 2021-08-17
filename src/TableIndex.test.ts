@@ -1,6 +1,6 @@
 import 'mocha';
 import { assert } from 'chai';
-import TableIndex, { TableKey } from './TableIndex';
+import TableIndex, { TableKey, TableKeyArgs } from './TableIndex';
 
 interface DemoItem {
   Id: string;
@@ -23,6 +23,11 @@ describe('TableIndex', () => {
       Id: 'foo',
       Ver: 1,
     });
+  });
+
+  it('TableKeyArgs type', () => {
+    assert.ok<TableKeyArgs<DemoItem, 'Id'>>(['foo']);
+    assert.ok<TableKeyArgs<DemoItem, 'Id', 'Ver'>>(['foo', 1]);
   });
 
   // describe('.createNamesMap()', () => {
