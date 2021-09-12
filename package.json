@@ -23,7 +23,7 @@
     "fix": "npm run fix:lint",
     "fix:lint": "npm run lint -- --fix",
     "mocha": "TS_NODE_FILES=true mocha -r ts-node/register \"src/**/*.test.ts\" --timeout 10000",
-    "mocha:coverage": "nyc npm run mocha && nyc report --reporter=text-lcov | coveralls",
+    "mocha:coverage": "nyc npm run mocha && nyc report --reporter=lcov",
     "mocha:build": "mocha lib/**/*.test.js --timeout 10000",
     "test:lint": "npm run lint -- \"--max-warnings\" 0",
     "test": "npm run type-check && npm run test:lint && npm run mocha",

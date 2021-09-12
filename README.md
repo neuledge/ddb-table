@@ -6,11 +6,13 @@
   <a href="https://www.npmjs.org/package/ddb-table">
     <img src="http://img.shields.io/npm/v/ddb-table.svg" alt="View On NPM">
   </a>
-  <a href="https://travis-ci.com/neuledge/ddb-table">
-    <img src="https://travis-ci.com/neuledge/ddb-table.svg?branch=master" alt="Build Status">
+  <a href="https://github.com/neuledge/ddb-table/actions/workflows/build.yml">
+    <img src="https://github.com/neuledge/ddb-table/actions/workflows/build.yml/badge.svg"
+      alt="Build Status">
   </a>
   <a href="https://depfu.com/github/neuledge/ddb-table?project_id=13055">
-    <img src="https://badges.depfu.com/badges/c06bc1e007e8b7f804d8563a56bb2ced/overview.svg" alt="Dependency Status">
+    <img src="https://badges.depfu.com/badges/c06bc1e007e8b7f804d8563a56bb2ced/overview.svg"
+      alt="Dependency Status">
   </a>
   <a href="https://coveralls.io/github/neuledge/ddb-table?branch=master">
     <img src="https://coveralls.io/repos/github/neuledge/ddb-table/badge.svg?branch=master"
