@@ -31,8 +31,7 @@ export type ItemProjection<T, P extends ProjectionFields<T>> = {
   [K in ProjectionFieldsKeys<T, P>]: [P[K]] extends [object]
     ? ItemProjection<T[K], P[K]>
     : T[K];
-} &
-  { [K in ProjectionFieldsMaybeKeys<T, P>]?: T[K] };
+} & { [K in ProjectionFieldsMaybeKeys<T, P>]?: T[K] };
 
 export default class ProjectionExpression<T extends K, K> {
   private names: ExpressionAttributeNames<T>;
