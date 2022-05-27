@@ -1,4 +1,8 @@
-import DocumentClient, { Item, ScanInput, ScanOutput } from '../DocumentClient';
+import DynamoDBDocument, {
+  Item,
+  ScanCommandInput,
+  ScanCommandOutput,
+} from '../DocumentClient';
 import { QueryRequest } from './Query';
 import {
   ItemProjection,
@@ -6,8 +10,8 @@ import {
 } from '../expressions/ProjectionExpression';
 import ItemsQuery from './ItemsQuery';
 
-type QueryInput = ScanInput;
-type QueryOutput<T, K> = Omit<ScanOutput, 'Items'> & {
+type QueryInput = ScanCommandInput;
+type QueryOutput<T, K> = Omit<ScanCommandOutput, 'Items'> & {
   Items?: T[];
   LastEvaluatedKey?: K;
 };
@@ -18,7 +22,7 @@ export default class ScanQuery<T extends K, K extends Item> extends ItemsQuery<
   QueryInput,
   QueryOutput<T, K>
 > {
-  public constructor(client: DocumentClient, params: QueryInput) {
+  public constructor(client: DynamoDBDocument, params: QueryInput) {
     super(
       client.scan.bind(client) as QueryRequest<QueryInput, QueryOutput<T, K>>,
       params,

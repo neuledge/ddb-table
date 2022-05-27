@@ -8,14 +8,14 @@ import UpdateValueExpression from './UpdateValueExpression';
 
 export type AddValue<T> = [T] extends [
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  { type: string; values: any[] } | number | undefined,
+  Set<any> | number | undefined,
 ]
   ? T
   : never;
 
 export type DeleteValue<T> = [T] extends [
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  { type: string; values: any[] } | undefined,
+  Set<any> | undefined,
 ]
   ? T
   : never;

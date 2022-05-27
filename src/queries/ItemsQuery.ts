@@ -1,4 +1,4 @@
-import { Item, Key, ScanInput, QueryInput } from '../DocumentClient';
+import { Item, Key, ScanCommandInput } from '../DocumentClient';
 import Query from './Query';
 import {
   ConditionExpression,
@@ -7,11 +7,12 @@ import {
 } from '../expressions';
 import { ProjectionFields } from '../expressions/ProjectionExpression';
 import { ConditionGenerator } from '../expressions/ConditionExpression';
+import { QueryCommandInput } from '@aws-sdk/lib-dynamodb';
 
 export default class ItemsQuery<
   T extends K,
   K extends Item,
-  I extends ScanInput | QueryInput,
+  I extends ScanCommandInput | QueryCommandInput,
   O extends { Items?: T[]; LastEvaluatedKey?: K },
 > extends Query<T, I, O> {
   protected values!: ExpressionAttributeValues;

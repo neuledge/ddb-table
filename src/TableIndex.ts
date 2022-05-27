@@ -1,4 +1,4 @@
-import DocumentClient, { Item } from './DocumentClient';
+import DynamoDBDocument, { Item } from './DocumentClient';
 import ScanQuery from './queries/ScanQuery';
 import QueryQuery from './queries/QueryQuery';
 
@@ -7,7 +7,7 @@ export interface TableIndexOptions<H, S> {
   indexName?: string;
   primaryKey: H;
   sortKey?: S;
-  documentClient?: DocumentClient;
+  documentClient: DynamoDBDocument;
 }
 export type TableIndexOptionsArg<H, S> = TableIndexOptions<H, S> &
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -33,28 +33,16 @@ export default class TableIndex<
   public readonly indexName?: string;
   public readonly primaryKey: H;
   public readonly sortKey?: S;
-  protected readonly client: DocumentClient;
+  protected readonly client: DynamoDBDocument;
 
   public constructor(opts: TableIndexOptionsArg<H, S>) {
-    this.client = opts.documentClient || new DocumentClient();
+    this.client = opts.documentClient;
 
     this.name = opts.tableName;
     this.indexName = opts.indexName;
     this.primaryKey = opts.primaryKey;
     this.sortKey = opts.sortKey;
   }
-
-  // public createNamesMap(
-  //   nameMap?: ExpressionAttributeNameMap,
-  // ): ExpressionAttributeNames<T> {
-  //   return new ExpressionAttributeNames<T>(nameMap);
-  // }
-
-  // public createValuesMap(
-  //   valueMap?: ExpressionAttributeValueMap,
-  // ): ExpressionAttributeValues {
-  //   return new ExpressionAttributeValues(valueMap);
-  // }
 
   public key(
     ...[primaryKey, sortKey]: TableKeyArgs<T, H, S>

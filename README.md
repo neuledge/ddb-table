@@ -34,7 +34,7 @@ await table
   .update('demo@example.com')
   .set('FullName', 'John Doe')
   // 🚨 TypeScript Error: 'fullName' is not assignable to 'Email' | 'FullName'
-  .condition(cond => cond.eq('fullName', 'Johnny Doe'))
+  .condition((cond) => cond.eq('fullName', 'Johnny Doe'))
   .exec();
 ```
 
@@ -59,7 +59,10 @@ npm i ddb-table
 ## Usage
 
 ```ts
-import Table, { Set, setOf } from 'ddb-table';
+import Table from 'ddb-table';
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
+
 
 interface MessageSchema {
   threadId: string;
@@ -74,22 +77,27 @@ interface MessageSchema {
   }[];
 }
 
+const client = new DynamoDBClient({
+  // settings...
+});
+
 // create the basic table definition
 const messages = new Table<MessageSchema, 'threadId', 'timestamp'>({
   tableName: 'Messages',
   primaryKey: 'threadId',
   sortKey: 'timestamp',
+  documentClient: DynamoDBDocument.from(client);
 });
 
 const updateRes = await messages
   .update('john@gmail.com', 1588191225322)
   .set('message', 'Hello World!')
-  .add('tags', setOf('unread', 'important'))
+  .add('tags', new Set(['unread', 'important']))
   .set('attachments', (exp) =>
     exp.listAppend([{ name: 'Test', URL: 'demo.com' }]),
   )
   .return('ALL_NEW')
-  .exec(); 
+  .exec();
 
 console.log(updateRes.Attributes);
 ```
@@ -111,8 +119,10 @@ const outboxIndex = messages.index<
 
 const it = outboxIndex
   .query()
-  .keyCondition(cond => cond.eq('senderId', 'john@gmail.com'))
-  .keyCondition(cond => cond.between('timestamp', Date.now() - 3600e3, Date.now()))
+  .keyCondition((cond) => cond.eq('senderId', 'john@gmail.com'))
+  .keyCondition((cond) =>
+    cond.between('timestamp', Date.now() - 3600e3, Date.now()),
+  )
   .project({ threadId: 1, message: 1 })
   .reverseIndex()
   .entries();
@@ -126,4 +136,4 @@ for await (const item of it) {
 
 ## License
 
-[MIT](LICENSE) license &copy; 2020 [Neuledge](https://neuledge.com)
+[MIT](LICENSE) license &copy; 2022 [Neuledge](https://neuledge.com)

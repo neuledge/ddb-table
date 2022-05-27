@@ -1,14 +1,14 @@
-import DocumentClient, {
+import DynamoDBDocument, {
   Item,
-  PutItemInput,
-  PutItemOutput,
+  PutCommandInput,
+  PutCommandOutput,
 } from '../DocumentClient';
 import Query, { QueryRequest } from './Query';
 import { ConditionExpression, ExpressionAttributeValues } from '../expressions';
 import { ConditionGenerator } from '../expressions/ConditionExpression';
 
-type QueryInput<T> = Omit<PutItemInput, 'Item'> & { Item: T };
-type QueryOutput<T> = Omit<PutItemOutput, 'Attributes'> & {
+type QueryInput<T> = Omit<PutCommandInput, 'Item'> & { Item: T };
+type QueryOutput<T> = Omit<PutCommandOutput, 'Attributes'> & {
   Attributes?: T;
 };
 
@@ -20,7 +20,7 @@ export default class PutQuery<T extends Item> extends Query<
   private values!: ExpressionAttributeValues;
   private conditions!: ConditionExpression<T>;
 
-  public constructor(client: DocumentClient, params: QueryInput<T>) {
+  public constructor(client: DynamoDBDocument, params: QueryInput<T>) {
     super(
       client.put.bind(client) as QueryRequest<QueryInput<T>, QueryOutput<T>>,
       params,

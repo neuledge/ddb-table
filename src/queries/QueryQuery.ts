@@ -1,7 +1,7 @@
-import DocumentClient, {
+import DynamoDBDocument, {
   Item,
-  QueryInput as AWSQueryInput,
-  QueryOutput as AWSQueryOutput,
+  QueryCommandInput,
+  QueryCommandOutput,
 } from '../DocumentClient';
 import { QueryRequest } from './Query';
 import {
@@ -12,8 +12,8 @@ import ItemsQuery from './ItemsQuery';
 import { ConditionExpression } from '../expressions';
 import { ConditionGenerator } from '../expressions/ConditionExpression';
 
-type QueryInput = AWSQueryInput;
-type QueryOutput<T, K> = Omit<AWSQueryOutput, 'Items'> & {
+type QueryInput = QueryCommandInput;
+type QueryOutput<T, K> = Omit<QueryCommandOutput, 'Items'> & {
   Items?: T[];
   LastEvaluatedKey?: K;
 };
@@ -26,7 +26,7 @@ export default class QueryQuery<T extends K, K extends Item> extends ItemsQuery<
 > {
   protected keyConditions!: ConditionExpression<T>;
 
-  public constructor(client: DocumentClient, params: QueryInput) {
+  public constructor(client: DynamoDBDocument, params: QueryInput) {
     super(
       client.query.bind(client) as QueryRequest<QueryInput, QueryOutput<T, K>>,
       params,

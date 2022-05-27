@@ -1,14 +1,16 @@
-import DocumentClient, {
-  DeleteItemInput,
-  DeleteItemOutput,
+import DynamoDBDocument, {
+  DeleteCommandInput,
+  DeleteCommandOutput,
   Item,
 } from '../DocumentClient';
 import Query, { QueryRequest } from './Query';
 import { ConditionExpression, ExpressionAttributeValues } from '../expressions';
 import { ConditionGenerator } from '../expressions/ConditionExpression';
 
-type QueryInput<K> = Omit<DeleteItemInput, 'Key'> & { Key: K };
-type QueryOutput<T> = Omit<DeleteItemOutput, 'Attributes'> & { Attributes?: T };
+type QueryInput<K> = Omit<DeleteCommandInput, 'Key'> & { Key: K };
+type QueryOutput<T> = Omit<DeleteCommandOutput, 'Attributes'> & {
+  Attributes?: T;
+};
 
 export default class DeleteQuery<T extends K, K extends Item> extends Query<
   T,
@@ -18,7 +20,7 @@ export default class DeleteQuery<T extends K, K extends Item> extends Query<
   private values!: ExpressionAttributeValues;
   private conditions!: ConditionExpression<T>;
 
-  public constructor(client: DocumentClient, params: QueryInput<K>) {
+  public constructor(client: DynamoDBDocument, params: QueryInput<K>) {
     super(
       client.delete.bind(client) as QueryRequest<QueryInput<K>, QueryOutput<T>>,
       params,

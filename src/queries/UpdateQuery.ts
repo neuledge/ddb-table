@@ -1,7 +1,7 @@
-import DocumentClient, {
+import DynamoDBDocument, {
   Item,
-  UpdateItemInput,
-  UpdateItemOutput,
+  UpdateCommandInput,
+  UpdateCommandOutput,
 } from '../DocumentClient';
 import Query, { QueryRequest } from './Query';
 import {
@@ -16,8 +16,8 @@ import {
 } from '../expressions/UpdateExpression';
 import { ConditionGenerator } from '../expressions/ConditionExpression';
 
-type QueryInput<K> = Omit<UpdateItemInput, 'Key'> & { Key: K };
-type QueryOutput<T> = Omit<UpdateItemOutput, 'Attributes'> & {
+type QueryInput<K> = Omit<UpdateCommandInput, 'Key'> & { Key: K };
+type QueryOutput<T> = Omit<UpdateCommandOutput, 'Attributes'> & {
   Attributes?: T;
 };
 
@@ -30,7 +30,7 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
   private conditions!: ConditionExpression<T>;
   private update!: UpdateExpression<T>;
 
-  public constructor(client: DocumentClient, params: QueryInput<K>) {
+  public constructor(client: DynamoDBDocument, params: QueryInput<K>) {
     super(
       client.update.bind(client) as QueryRequest<QueryInput<K>, QueryOutput<T>>,
       params,

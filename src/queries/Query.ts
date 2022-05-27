@@ -1,24 +1,23 @@
 import {
-  AWSRequest,
-  DeleteItemInput,
-  GetItemInput,
+  DeleteCommandInput,
+  GetCommandInput,
   Item,
-  PutItemInput,
-  QueryInput,
-  ScanInput,
-  UpdateItemInput,
+  PutCommandInput,
+  QueryCommandInput,
+  ScanCommandInput,
+  UpdateCommandInput,
 } from '../DocumentClient';
 import { ExpressionAttributeNames } from '../expressions';
 
-export type QueryRequest<I, O> = (params: I) => AWSRequest<O>;
+export type QueryRequest<I, O> = (params: I) => Promise<O>;
 
 type Inputs =
-  | PutItemInput
-  | GetItemInput
-  | ScanInput
-  | QueryInput
-  | UpdateItemInput
-  | DeleteItemInput;
+  | PutCommandInput
+  | GetCommandInput
+  | ScanCommandInput
+  | QueryCommandInput
+  | UpdateCommandInput
+  | DeleteCommandInput;
 
 export default class Query<T extends Item, I extends Inputs, O> {
   protected readonly input: I;
@@ -65,11 +64,7 @@ export default class Query<T extends Item, I extends Inputs, O> {
     return this.input;
   }
 
-  public requestOnly(): ReturnType<QueryRequest<I, O>> {
-    return this.request(this.serialize());
-  }
-
   public exec(): Promise<O> {
-    return this.requestOnly().promise();
+    return this.request(this.serialize());
   }
 }

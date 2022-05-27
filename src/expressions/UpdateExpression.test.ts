@@ -10,10 +10,7 @@ interface DemoItem {
   };
   hello?: string;
   list: number[];
-  set?: {
-    type: 'String';
-    values: string[];
-  };
+  set?: Set<string>;
 }
 
 describe('UpdateExpression', () => {
@@ -153,14 +150,14 @@ describe('UpdateExpression', () => {
       const values = new ExpressionAttributeValues();
       const update = new UpdateExpression<DemoItem>(names, values);
 
-      update.add('set', { type: 'String', values: ['test'] });
+      update.add('set', new Set(['test']));
 
       assert.deepEqual(update.serialize(), 'ADD #set :set');
       assert.deepEqual(names.serialize(), {
         '#set': 'set',
       });
       assert.deepEqual(values.serialize(), {
-        ':set': { type: 'String', values: ['test'] },
+        ':set': new Set(['test']),
       });
     });
   });
@@ -171,14 +168,14 @@ describe('UpdateExpression', () => {
       const values = new ExpressionAttributeValues();
       const update = new UpdateExpression<DemoItem>(names, values);
 
-      update.delete('set', { type: 'String', values: ['test'] });
+      update.delete('set', new Set(['test']));
 
       assert.deepEqual(update.serialize(), 'DELETE #set :set');
       assert.deepEqual(names.serialize(), {
         '#set': 'set',
       });
       assert.deepEqual(values.serialize(), {
-        ':set': { type: 'String', values: ['test'] },
+        ':set': new Set(['test']),
       });
     });
   });

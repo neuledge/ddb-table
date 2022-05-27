@@ -6,16 +6,11 @@
     "declaration": true,
     "outDir": "./lib",
     "strict": true,
-    "typeRoots": [
-      "./types",
-      "./node_modules/@types"
-    ],
+    "typeRoots": ["./types", "./node_modules/@types"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "lib": [
-      "esnext"
-    ]
+    "lib": ["esnext", "dom"]
   }
 }

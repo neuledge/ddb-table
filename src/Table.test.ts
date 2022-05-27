@@ -11,10 +11,7 @@ interface DemoItem {
   inner: {
     obj: string;
   };
-  set?: {
-    type: 'String';
-    values: string[];
-  };
+  set?: Set<string>;
   maybe?: boolean;
   hidden: boolean;
 }
@@ -28,6 +25,7 @@ describe('Table', () => {
         tableName: 'MyTable',
         primaryKey: 'Id',
         sortKey: 'Ver',
+        documentClient: null as never,
       });
 
       const index = table.index<DemoIndex, 'Id', 'foo'>('Id-foo', 'Id', 'foo');
@@ -45,6 +43,7 @@ describe('Table', () => {
         tableName: 'MyTable',
         primaryKey: 'Id',
         sortKey: 'Ver',
+        documentClient: null as never,
       });
 
       assert.deepEqual(
@@ -88,6 +87,7 @@ describe('Table', () => {
         tableName: 'MyTable',
         primaryKey: 'Id',
         sortKey: 'Ver',
+        documentClient: null as never,
       });
 
       assert.deepEqual(
@@ -114,6 +114,7 @@ describe('Table', () => {
         tableName: 'MyTable',
         primaryKey: 'Id',
         sortKey: 'Ver',
+        documentClient: null as never,
       });
 
       const query = table
@@ -133,6 +134,7 @@ describe('Table', () => {
         tableName: 'MyTable',
         primaryKey: 'Id',
         sortKey: 'Ver',
+        documentClient: null as never,
       });
 
       const query = table.get('ss', 1);
@@ -156,6 +158,7 @@ describe('Table', () => {
         tableName: 'MyTable',
         primaryKey: 'Id',
         sortKey: 'Ver',
+        documentClient: null as never,
       });
 
       assert.deepEqual(
@@ -164,7 +167,7 @@ describe('Table', () => {
           .condition((cn) => cn.attributeExists('Id'))
           .set(['inner', 'obj'], 'hello')
           .add('foo', 5)
-          .delete('set', { type: 'String', values: ['del'] })
+          .delete('set', new Set(['del']))
           .remove('hidden')
           .serialize(),
         {
@@ -203,6 +206,7 @@ describe('Table', () => {
         tableName: 'MyTable',
         primaryKey: 'Id',
         sortKey: 'Ver',
+        documentClient: null as never,
       });
 
       assert.deepEqual(

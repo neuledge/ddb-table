@@ -1,41 +1,26 @@
 import 'mocha';
-import AWS from 'aws-sdk';
-import AWSMock from 'aws-sdk-mock';
+import sinon from 'sinon';
 import { assert } from 'chai';
-import Table, { Set, setOf } from './';
+import Table from './';
+import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 describe('README.md', () => {
+  let documentClient: DynamoDBDocument;
+
   before(() => {
-    AWSMock.setSDKInstance(AWS);
-
-    AWSMock.mock(
-      'DynamoDB.DocumentClient',
-      'update',
-      (params: unknown, callback: (err: Error | null, item: unknown) => void) =>
-        callback(null, params),
-    );
-
-    AWSMock.mock(
-      'DynamoDB.DocumentClient',
-      'query',
-      (
-        params: Record<string, undefined>,
-        callback: (err: Error | null, item: unknown) => void,
-      ) =>
-        callback(null, {
+    documentClient = sinon.createStubInstance(DynamoDBDocument, {
+      update: ((params: unknown) => Promise.resolve(params)) as never,
+      query: ((params: Record<string, undefined>) =>
+        Promise.resolve({
           Items: [
             { i: 0, ...params },
             { i: 1, ...params },
           ],
           LastEvaluatedKey: params.ExclusiveStartKey ? undefined : { key: 2 },
-        }),
-    );
-  });
-
-  after(() => {
-    AWSMock.restore('DynamoDB');
+        })) as never,
+    });
   });
 
   it('Usage 1', async () => {
@@ -52,8 +37,6 @@ describe('README.md', () => {
       }[];
     }
 
-    const documentClient = new AWS.DynamoDB.DocumentClient();
-
     // create the basic table definition
     const messages = new Table<MessageSchema, 'threadId', 'timestamp'>({
       tableName: 'Messages',
@@ -65,7 +48,7 @@ describe('README.md', () => {
     const updateRes = await messages
       .update('john@gmail.com', 1588191225322)
       .set('message', 'Hello World!')
-      .add('tags', setOf('unread', 'important'))
+      .add('tags', new Set(['unread', 'important']))
       .set('attachments', (exp) =>
         exp.listAppend([{ name: 'Test', URL: 'demo.com' }]),
       )
@@ -94,7 +77,7 @@ describe('README.md', () => {
           },
         ],
         ':message': 'Hello World!',
-        ':tags': documentClient.createSet(['unread', 'important']),
+        ':tags': new Set(['unread', 'important']),
       },
       ReturnValues: 'ALL_NEW',
     });
@@ -120,7 +103,7 @@ describe('README.md', () => {
       tableName: 'Messages',
       primaryKey: 'threadId',
       sortKey: 'timestamp',
-      documentClient: new AWS.DynamoDB.DocumentClient(),
+      documentClient,
     });
 
     // create a secondary index definition

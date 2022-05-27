@@ -1,6 +1,6 @@
-import DocumentClient, {
-  GetItemInput,
-  GetItemOutput,
+import DynamoDBDocument, {
+  GetCommandInput,
+  GetCommandOutput,
   Item,
 } from '../DocumentClient';
 import Query, { QueryRequest } from './Query';
@@ -10,8 +10,8 @@ import {
   ProjectionFields,
 } from '../expressions/ProjectionExpression';
 
-type QueryInput<K> = Omit<GetItemInput, 'Key'> & { Key: K };
-type QueryOutput<T> = Omit<GetItemOutput, 'Item'> & { Item?: T };
+type QueryInput<K> = Omit<GetCommandInput, 'Key'> & { Key: K };
+type QueryOutput<T> = Omit<GetCommandOutput, 'Item'> & { Item?: T };
 
 export default class GetQuery<T extends K, K extends Item> extends Query<
   T,
@@ -20,7 +20,7 @@ export default class GetQuery<T extends K, K extends Item> extends Query<
 > {
   private projection!: ProjectionExpression<T, K>;
 
-  public constructor(client: DocumentClient, params: QueryInput<K>) {
+  public constructor(client: DynamoDBDocument, params: QueryInput<K>) {
     super(
       client.get.bind(client) as QueryRequest<QueryInput<K>, QueryOutput<T>>,
       params,

@@ -1,4 +1,4 @@
-import { Table } from "./lib/index.js";
+import { Table } from './lib/index.js';
 export * from './lib/index.js';
 
 export default Table;
