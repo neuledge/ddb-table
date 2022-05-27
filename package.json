@@ -1,6 +1,6 @@
 {
   "name": "ddb-table",
-  "version": "1.3.1",
+  "version": "2.0.0-beta1",
   "description": "Strongly typed library for querying and modeling DynamoDB documents.",
   "keywords": [
     "DynamoDB",
