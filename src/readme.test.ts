@@ -1,5 +1,4 @@
 import 'mocha';
-import sinon from 'sinon';
 import { assert } from 'chai';
 import Table from './';
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
@@ -10,17 +9,18 @@ describe('README.md', () => {
   let documentClient: DynamoDBDocument;
 
   before(() => {
-    documentClient = sinon.createStubInstance(DynamoDBDocument, {
-      update: ((params: unknown) => Promise.resolve(params)) as never,
-      query: ((params: Record<string, undefined>) =>
+    // stub instance
+    documentClient = {
+      update: (params: unknown) => Promise.resolve(params),
+      query: (params: Record<string, undefined>) =>
         Promise.resolve({
           Items: [
             { i: 0, ...params },
             { i: 1, ...params },
           ],
           LastEvaluatedKey: params.ExclusiveStartKey ? undefined : { key: 2 },
-        })) as never,
-    });
+        }),
+    } as never;
   });
 
   it('Usage 1', async () => {

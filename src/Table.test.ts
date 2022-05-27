@@ -25,7 +25,7 @@ describe('Table', () => {
         tableName: 'MyTable',
         primaryKey: 'Id',
         sortKey: 'Ver',
-        documentClient: null as never,
+        documentClient: { scan: () => null } as never,
       });
 
       const index = table.index<DemoIndex, 'Id', 'foo'>('Id-foo', 'Id', 'foo');
@@ -43,7 +43,7 @@ describe('Table', () => {
         tableName: 'MyTable',
         primaryKey: 'Id',
         sortKey: 'Ver',
-        documentClient: null as never,
+        documentClient: { put: () => null } as never,
       });
 
       assert.deepEqual(
@@ -87,7 +87,7 @@ describe('Table', () => {
         tableName: 'MyTable',
         primaryKey: 'Id',
         sortKey: 'Ver',
-        documentClient: null as never,
+        documentClient: { get: () => null } as never,
       });
 
       assert.deepEqual(
@@ -114,7 +114,7 @@ describe('Table', () => {
         tableName: 'MyTable',
         primaryKey: 'Id',
         sortKey: 'Ver',
-        documentClient: null as never,
+        documentClient: { get: () => null } as never,
       });
 
       const query = table
@@ -134,7 +134,7 @@ describe('Table', () => {
         tableName: 'MyTable',
         primaryKey: 'Id',
         sortKey: 'Ver',
-        documentClient: null as never,
+        documentClient: { get: () => null } as never,
       });
 
       const query = table.get('ss', 1);
@@ -158,7 +158,7 @@ describe('Table', () => {
         tableName: 'MyTable',
         primaryKey: 'Id',
         sortKey: 'Ver',
-        documentClient: null as never,
+        documentClient: { update: () => null } as never,
       });
 
       assert.deepEqual(
@@ -190,10 +190,7 @@ describe('Table', () => {
           ExpressionAttributeValues: {
             ':foo': 5,
             ':obj': 'hello',
-            ':set': {
-              type: 'String',
-              values: ['del'],
-            },
+            ':set': new Set(['del']),
           },
         },
       );
@@ -206,7 +203,7 @@ describe('Table', () => {
         tableName: 'MyTable',
         primaryKey: 'Id',
         sortKey: 'Ver',
-        documentClient: null as never,
+        documentClient: { delete: () => null } as never,
       });
 
       assert.deepEqual(

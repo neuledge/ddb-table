@@ -67,7 +67,7 @@ describe('TableIndex', () => {
       const table = new TableIndex<DemoItem, 'Id'>({
         tableName: 'MyTable',
         primaryKey: 'Id',
-        documentClient: null as never,
+        documentClient: { scan: () => null } as never,
       });
 
       assert.deepEqual(table.scan().serialize(), {
@@ -81,7 +81,7 @@ describe('TableIndex', () => {
         primaryKey: 'Id',
         sortKey: 'Ver',
         indexName: 'Test',
-        documentClient: null as never,
+        documentClient: { scan: () => null } as never,
       });
 
       assert.deepEqual(
@@ -124,7 +124,7 @@ describe('TableIndex', () => {
         primaryKey: 'Id',
         sortKey: 'Ver',
         indexName: 'Test',
-        documentClient: null as never,
+        documentClient: { scan: () => null } as never,
       });
 
       assert.deepEqual(
@@ -142,7 +142,7 @@ describe('TableIndex', () => {
       const table = new TableIndex<DemoItem, 'Id'>({
         tableName: 'MyTable',
         primaryKey: 'Id',
-        documentClient: null as never,
+        documentClient: { query: () => null } as never,
       });
 
       assert.deepEqual(
@@ -169,7 +169,7 @@ describe('TableIndex', () => {
         primaryKey: 'Id',
         sortKey: 'Ver',
         indexName: 'Test',
-        documentClient: null as never,
+        documentClient: { query: () => null } as never,
       });
 
       assert.deepEqual(

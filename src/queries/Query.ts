@@ -64,7 +64,7 @@ export default class Query<T extends Item, I extends Inputs, O> {
     return this.input;
   }
 
-  public exec(): Promise<O> {
-    return this.request(this.serialize());
+  public exec(options?: Partial<I>): Promise<O> {
+    return this.request(Object.assign(this.serialize(), options));
   }
 }
