@@ -135,12 +135,12 @@ for await (const item of it) {
 ### Error Handling
 
 ```ts
-import { DynamoDBError, DynamoDBException } from 'ddb-table';
+import { DynamoDBExceptionName } from 'ddb-table';
 
 try {
   await table.put(...).exec();
 } catch (err) {
-  if ((err as DynamoDBError).name === DynamoDBException.ConditionalCheckFailedException) {
+  if ((err as DynamoDBServiceException)?.name === DynamoDBExceptionName.ConditionalCheckFailedException) {
     // handle exception
   }
 }

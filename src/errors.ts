@@ -1,8 +1,4 @@
-export interface DynamoDBError extends Error {
-  name: DynamoDBException | string;
-}
-
-export enum DynamoDBException {
+export enum DynamoDBExceptionName {
   /**
    * **Message:** *Access denied.*
    *
