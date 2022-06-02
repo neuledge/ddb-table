@@ -132,6 +132,20 @@ for await (const item of it) {
 }
 ```
 
+### Error Handling
+
+```ts
+import { DynamoDBError, DynamoDBException } from 'ddb-table';
+
+try {
+  await table.put(...).exec();
+} catch (err) {
+  if ((err as DynamoDBError).name === DynamoDBException.ConditionalCheckFailedException) {
+    // handle exception
+  }
+}
+```
+
 <br>
 
 ## License
