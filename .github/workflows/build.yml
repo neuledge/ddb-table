@@ -37,20 +37,8 @@ jobs:
       - name: Run tests
         run: npm run coverage
 
-      - name: Coveralls
-        env:
-          COVERALLS_FLAG_NAME: node-${{ matrix.node-version }}
-        uses: coverallsapp/github-action@master
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        if: matrix.node-version == '18.x'
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel: true
-
-  finish:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Coveralls Finished
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.github_token }}
-          parallel-finished: true
+          fail_ci_if_error: true
