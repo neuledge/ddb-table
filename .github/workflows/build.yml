@@ -38,10 +38,11 @@ jobs:
         run: npm run coverage
 
       - name: Coveralls
+        env:
+          COVERALLS_FLAG_NAME: node-${{ matrix.node-version }}
         uses: coverallsapp/github-action@v1.1.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          flag-name: node-${{ matrix.node-version }}
           parallel: true
 
   finish:
