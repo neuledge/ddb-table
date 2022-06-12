@@ -14,8 +14,8 @@
     <img src="https://badges.depfu.com/badges/c06bc1e007e8b7f804d8563a56bb2ced/overview.svg"
       alt="Dependency Status">
   </a>
-  <a href="https://coveralls.io/github/neuledge/ddb-table?branch=master">
-    <img src="https://coveralls.io/repos/github/neuledge/ddb-table/badge.svg?branch=master"
+  <a href="https://codecov.io/gh/neuledge/ddb-table">
+    <img src="https://codecov.io/gh/neuledge/ddb-table/branch/master/graph/badge.svg?token=JQG7E9QJ3B"
       alt="Coverage Status" />
   </a>
   <a href="LICENSE">
