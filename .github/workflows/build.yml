@@ -40,7 +40,7 @@ jobs:
       - name: Coveralls
         env:
           COVERALLS_FLAG_NAME: node-${{ matrix.node-version }}
-        uses: coverallsapp/github-action@v1.1.0
+        uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel: true
@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Coveralls Finished
-        uses: coverallsapp/github-action@v1.1.0
+        uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.github_token }}
           parallel-finished: true
