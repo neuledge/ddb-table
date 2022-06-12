@@ -14,8 +14,8 @@
     <img src="https://badges.depfu.com/badges/c06bc1e007e8b7f804d8563a56bb2ced/overview.svg"
       alt="Dependency Status">
   </a>
-  <a href="https://coveralls.io/github/neuledge/ddb-table?branch=master">
-    <img src="https://coveralls.io/repos/github/neuledge/ddb-table/badge.svg?branch=master"
+  <a href="https://codecov.io/gh/neuledge/ddb-table">
+    <img src="https://codecov.io/gh/neuledge/ddb-table/branch/master/graph/badge.svg?token=JQG7E9QJ3B"
       alt="Coverage Status" />
   </a>
   <a href="LICENSE">
@@ -34,7 +34,7 @@ await table
   .update('demo@example.com')
   .set('FullName', 'John Doe')
   // 🚨 TypeScript Error: 'fullName' is not assignable to 'Email' | 'FullName'
-  .condition(cond => cond.eq('fullName', 'Johnny Doe'))
+  .condition((cond) => cond.eq('fullName', 'Johnny Doe'))
   .exec();
 ```
 
@@ -89,7 +89,7 @@ const updateRes = await messages
     exp.listAppend([{ name: 'Test', URL: 'demo.com' }]),
   )
   .return('ALL_NEW')
-  .exec(); 
+  .exec();
 
 console.log(updateRes.Attributes);
 ```
@@ -111,8 +111,10 @@ const outboxIndex = messages.index<
 
 const it = outboxIndex
   .query()
-  .keyCondition(cond => cond.eq('senderId', 'john@gmail.com'))
-  .keyCondition(cond => cond.between('timestamp', Date.now() - 3600e3, Date.now()))
+  .keyCondition((cond) => cond.eq('senderId', 'john@gmail.com'))
+  .keyCondition((cond) =>
+    cond.between('timestamp', Date.now() - 3600e3, Date.now()),
+  )
   .project({ threadId: 1, message: 1 })
   .reverseIndex()
   .entries();
