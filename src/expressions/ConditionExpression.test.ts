@@ -453,7 +453,7 @@ describe('ConditionExpression', () => {
     it('basic use case', () => {
       const names = new ExpressionAttributeNames();
       const values = new ExpressionAttributeValues();
-      const exp = new ConditionExpression<{ foo: number }>(names, values);
+      const exp = new ConditionExpression<{ foo: string }>(names, values);
 
       exp.contains('foo', 'str');
 
@@ -486,6 +486,36 @@ describe('ConditionExpression', () => {
       assert.deepEqual(values.serialize(), { ':foo': 123 });
     });
 
+    it('nullable string set use case', () => {
+      const names = new ExpressionAttributeNames();
+      const values = new ExpressionAttributeValues();
+      const exp = new ConditionExpression<{ foo?: Set<string> | null }>(
+        names,
+        values,
+      );
+
+      exp.contains('foo', 'str');
+
+      assert.equal(exp.serialize(), 'contains(#foo, :foo)');
+      assert.deepEqual(names.serialize(), { '#foo': 'foo' });
+      assert.deepEqual(values.serialize(), { ':foo': 'str' });
+    });
+
+    it('nullable number set use case', () => {
+      const names = new ExpressionAttributeNames();
+      const values = new ExpressionAttributeValues();
+      const exp = new ConditionExpression<{ foo?: Set<number> | null }>(
+        names,
+        values,
+      );
+
+      exp.contains('foo', 3);
+
+      assert.equal(exp.serialize(), 'contains(#foo, :foo)');
+      assert.deepEqual(names.serialize(), { '#foo': 'foo' });
+      assert.deepEqual(values.serialize(), { ':foo': 3 });
+    });
+
     it('other path', () => {
       const names = new ExpressionAttributeNames();
       const values = new ExpressionAttributeValues();
@@ -504,7 +534,7 @@ describe('ConditionExpression', () => {
     it('inner path', () => {
       const names = new ExpressionAttributeNames();
       const values = new ExpressionAttributeValues();
-      const exp = new ConditionExpression<{ foo: { bar: number } }>(
+      const exp = new ConditionExpression<{ foo: { bar: string } }>(
         names,
         values,
       );

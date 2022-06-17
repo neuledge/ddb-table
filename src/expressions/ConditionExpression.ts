@@ -57,7 +57,11 @@ const OppsiteOperandMatch = {
 };
 
 export type ContainsOperand<T, V> =
-  | ([V] extends [string] ? V : [V] extends [Set<infer SV>] ? SV : string)
+  | ([NonNullable<V>] extends [string]
+      ? NonNullable<V>
+      : [NonNullable<V>] extends [Set<infer SV>]
+      ? SV
+      : never)
   | ((exp: ConditionExpression<T>) => string);
 
 export default class ConditionExpression<T> {
