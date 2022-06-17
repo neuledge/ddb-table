@@ -56,6 +56,10 @@ const OppsiteOperandMatch = {
   OR: /[ )]AND[ (]/i,
 };
 
+export type ContainsOperand<T, V> =
+  | ([V] extends [string] ? V : [V] extends [Set<infer SV>] ? SV : string)
+  | ((exp: ConditionExpression<T>) => string);
+
 export default class ConditionExpression<T> {
   private names: ExpressionAttributeNames<T>;
   private values: ExpressionAttributeValues;
@@ -1147,29 +1151,38 @@ export default class ConditionExpression<T> {
     );
   }
 
-  public contains<K1 extends keyof T>(path: K1 | [K1], operand: string): this;
+  public contains<K1 extends keyof T>(
+    path: K1 | [K1],
+    operand: ContainsOperand<T, T[K1]>,
+  ): this;
   public contains<K1 extends keyof T, K2 extends keyof T[K1]>(
     path: [K1, K2],
-    operand: string,
+    operand: ContainsOperand<T, T[K1][K2]>,
   ): this;
   public contains<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
-  >(path: [K1, K2, K3], operand: string): this;
+  >(path: [K1, K2, K3], operand: ContainsOperand<T, T[K1][K2][K3]>): this;
   public contains<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
-  >(path: [K1, K2, K3, K4], operand: string): this;
+  >(
+    path: [K1, K2, K3, K4],
+    operand: ContainsOperand<T, T[K1][K2][K3][K4]>,
+  ): this;
   public contains<
     K1 extends keyof T,
     K2 extends keyof T[K1],
     K3 extends keyof T[K1][K2],
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
-  >(path: [K1, K2, K3, K4, K5], operand: string): this;
+  >(
+    path: [K1, K2, K3, K4, K5],
+    operand: ContainsOperand<T, T[K1][K2][K3][K4][K5]>,
+  ): this;
   public contains<
     K1 extends keyof T,
     K2 extends keyof T[K1],
@@ -1177,7 +1190,10 @@ export default class ConditionExpression<T> {
     K4 extends keyof T[K1][K2][K3],
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
-  >(path: [K1, K2, K3, K4, K5, K6], operand: string): this;
+  >(
+    path: [K1, K2, K3, K4, K5, K6],
+    operand: ContainsOperand<T, T[K1][K2][K3][K4][K5][K6]>,
+  ): this;
   public contains<
     K1 extends keyof T,
     K2 extends keyof T[K1],
@@ -1186,7 +1202,10 @@ export default class ConditionExpression<T> {
     K5 extends keyof T[K1][K2][K3][K4],
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-  >(path: [K1, K2, K3, K4, K5, K6, K7], operand: string): this;
+  >(
+    path: [K1, K2, K3, K4, K5, K6, K7],
+    operand: ContainsOperand<T, T[K1][K2][K3][K4][K5][K6][K7]>,
+  ): this;
   public contains<
     K1 extends keyof T,
     K2 extends keyof T[K1],
@@ -1196,7 +1215,10 @@ export default class ConditionExpression<T> {
     K6 extends keyof T[K1][K2][K3][K4][K5],
     K7 extends keyof T[K1][K2][K3][K4][K5][K6],
     K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
-  >(path: [K1, K2, K3, K4, K5, K6, K7, K8], operand: string): this;
+  >(
+    path: [K1, K2, K3, K4, K5, K6, K7, K8],
+    operand: ContainsOperand<T, T[K1][K2][K3][K4][K5][K6][K7][K8]>,
+  ): this;
   public contains<
     K1 extends keyof T,
     K2 extends keyof T[K1],
@@ -1208,7 +1230,8 @@ export default class ConditionExpression<T> {
     K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
   >(
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
-    operand: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    operand: ContainsOperand<T, any>,
   ): this {
     if (!Array.isArray(path)) {
       path = [path];
@@ -1217,7 +1240,9 @@ export default class ConditionExpression<T> {
     return this.fn(
       'contains',
       this.names.add(...path),
-      this.values.add(String(path[path.length - 1]), operand),
+      typeof operand === 'function'
+        ? operand(new ConditionExpression(this.names, this.values))
+        : this.values.add(String(path[path.length - 1]), operand),
     );
   }
 
@@ -1305,9 +1330,18 @@ export default class ConditionExpression<T> {
     );
   }
 
+  public not(fn: ConditionGenerator<T>): this {
+    return this.append(
+      'AND',
+      fn(new ConditionExpression(this.names, this.values)),
+      'NOT',
+    );
+  }
+
   private append(
     operand: keyof typeof OppsiteOperandMatch,
     item: ConditionExpression<T> | string,
+    prefix?: 'NOT',
   ): this {
     const condition =
       typeof item === 'string'
@@ -1325,6 +1359,10 @@ export default class ConditionExpression<T> {
         }
 
         this.expression += ` ${operand} `;
+      }
+
+      if (prefix) {
+        this.expression += `${prefix} `;
       }
 
       if (

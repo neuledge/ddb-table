@@ -462,6 +462,45 @@ describe('ConditionExpression', () => {
       assert.deepEqual(values.serialize(), { ':foo': 'str' });
     });
 
+    it('string set use case', () => {
+      const names = new ExpressionAttributeNames();
+      const values = new ExpressionAttributeValues();
+      const exp = new ConditionExpression<{ foo: Set<string> }>(names, values);
+
+      exp.contains('foo', 'str');
+
+      assert.equal(exp.serialize(), 'contains(#foo, :foo)');
+      assert.deepEqual(names.serialize(), { '#foo': 'foo' });
+      assert.deepEqual(values.serialize(), { ':foo': 'str' });
+    });
+
+    it('number set use case', () => {
+      const names = new ExpressionAttributeNames();
+      const values = new ExpressionAttributeValues();
+      const exp = new ConditionExpression<{ foo: Set<number> }>(names, values);
+
+      exp.contains('foo', 123);
+
+      assert.equal(exp.serialize(), 'contains(#foo, :foo)');
+      assert.deepEqual(names.serialize(), { '#foo': 'foo' });
+      assert.deepEqual(values.serialize(), { ':foo': 123 });
+    });
+
+    it('other path', () => {
+      const names = new ExpressionAttributeNames();
+      const values = new ExpressionAttributeValues();
+      const exp = new ConditionExpression<{ foo: string; bar: string }>(
+        names,
+        values,
+      );
+
+      exp.contains('foo', (cn) => cn.name('bar'));
+
+      assert.equal(exp.serialize(), 'contains(#foo, #bar)');
+      assert.deepEqual(names.serialize(), { '#foo': 'foo', '#bar': 'bar' });
+      assert.deepEqual(values.serialize(), undefined);
+    });
+
     it('inner path', () => {
       const names = new ExpressionAttributeNames();
       const values = new ExpressionAttributeValues();
@@ -563,6 +602,36 @@ describe('ConditionExpression', () => {
       assert.equal(exp.serialize(), 'attribute_exists(#foo) OR #foo = #foo');
       assert.deepEqual(names.serialize(), { '#foo': 'foo' });
       assert.deepEqual(values.serialize(), undefined);
+    });
+  });
+
+  describe('.not', () => {
+    it('basic use case', () => {
+      const names = new ExpressionAttributeNames();
+      const values = new ExpressionAttributeValues();
+      const exp = new ConditionExpression<{ foo: number }>(names, values);
+
+      exp.not((cn) => cn.attributeExists('foo'));
+
+      assert.equal(exp.serialize(), 'NOT attribute_exists(#foo)');
+      assert.deepEqual(names.serialize(), { '#foo': 'foo' });
+      assert.deepEqual(values.serialize(), undefined);
+    });
+
+    it('inner AND', () => {
+      const names = new ExpressionAttributeNames();
+      const values = new ExpressionAttributeValues();
+      const exp = new ConditionExpression<{ foo: number }>(names, values);
+
+      exp.not((cn) => cn.attributeExists('foo'));
+      exp.or((cn) => cn.gt('foo', 1).not((cn) => cn.lt('foo', 10)));
+
+      assert.equal(
+        exp.serialize(),
+        'NOT attribute_exists(#foo) OR (#foo > :foo AND NOT #foo < :foo2)',
+      );
+      assert.deepEqual(names.serialize(), { '#foo': 'foo' });
+      assert.deepEqual(values.serialize(), { ':foo': 1, ':foo2': 10 });
     });
   });
 });
