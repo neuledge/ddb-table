@@ -26,16 +26,16 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: 'yarn'
 
       - name: Install npm dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: Build files
-        run: npm run build
+        run: yarn run build
 
       - name: Run tests
-        run: npm run coverage
+        run: yarn run coverage
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
