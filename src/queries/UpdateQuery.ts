@@ -76,76 +76,167 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
     path: K1 | [K1],
     value: SetValue<T, T[K1]>,
   ): this;
-  public set<K1 extends keyof T, K2 extends keyof T[K1]>(
+  public set<K1 extends keyof T, K2 extends keyof NonNullable<T[K1]>>(
     path: [K1, K2],
-    value: SetValue<T, T[K1][K2]>,
+    value: SetValue<T, NonNullable<T[K1]>[K2]>,
   ): this;
   public set<
     K1 extends keyof T,
-    K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2],
-  >(path: [K1, K2, K3], value: SetValue<T, T[K1][K2][K3]>): this;
+    K2 extends keyof NonNullable<T[K1]>,
+    K3 extends keyof NonNullable<NonNullable<T[K1]>[K2]>,
+  >(
+    path: [K1, K2, K3],
+    value: SetValue<T, NonNullable<NonNullable<T[K1]>[K2]>[K3]>,
+  ): this;
   public set<
     K1 extends keyof T,
-    K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3],
-  >(path: [K1, K2, K3, K4], value: SetValue<T, T[K1][K2][K3][K4]>): this;
+    K2 extends keyof NonNullable<T[K1]>,
+    K3 extends keyof NonNullable<NonNullable<T[K1]>[K2]>,
+    K4 extends keyof NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>,
+  >(
+    path: [K1, K2, K3, K4],
+    value: SetValue<
+      T,
+      NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]
+    >,
+  ): this;
   public set<
     K1 extends keyof T,
-    K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4],
+    K2 extends keyof NonNullable<T[K1]>,
+    K3 extends keyof NonNullable<NonNullable<T[K1]>[K2]>,
+    K4 extends keyof NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>,
+    K5 extends keyof NonNullable<
+      NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]
+    >,
   >(
     path: [K1, K2, K3, K4, K5],
-    value: SetValue<T, T[K1][K2][K3][K4][K5]>,
+    value: SetValue<
+      T,
+      NonNullable<NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]>[K5]
+    >,
   ): this;
   public set<
     K1 extends keyof T,
-    K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5],
+    K2 extends keyof NonNullable<T[K1]>,
+    K3 extends keyof NonNullable<NonNullable<T[K1]>[K2]>,
+    K4 extends keyof NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>,
+    K5 extends keyof NonNullable<
+      NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]
+    >,
+    K6 extends keyof NonNullable<
+      NonNullable<NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]>[K5]
+    >,
   >(
     path: [K1, K2, K3, K4, K5, K6],
-    value: SetValue<T, T[K1][K2][K3][K4][K5][K6]>,
+    value: SetValue<
+      T,
+      NonNullable<
+        NonNullable<
+          NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]
+        >[K5]
+      >[K6]
+    >,
   ): this;
   public set<
     K1 extends keyof T,
-    K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5],
-    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
+    K2 extends keyof NonNullable<T[K1]>,
+    K3 extends keyof NonNullable<NonNullable<T[K1]>[K2]>,
+    K4 extends keyof NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>,
+    K5 extends keyof NonNullable<
+      NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]
+    >,
+    K6 extends keyof NonNullable<
+      NonNullable<NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]>[K5]
+    >,
+    K7 extends keyof NonNullable<
+      NonNullable<
+        NonNullable<
+          NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]
+        >[K5]
+      >[K6]
+    >,
   >(
     path: [K1, K2, K3, K4, K5, K6, K7],
-    value: SetValue<T, T[K1][K2][K3][K4][K5][K6][K7]>,
+    value: SetValue<
+      T,
+      NonNullable<
+        NonNullable<
+          NonNullable<
+            NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]
+          >[K5]
+        >[K6]
+      >[K7]
+    >,
   ): this;
   public set<
     K1 extends keyof T,
-    K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5],
-    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
+    K2 extends keyof NonNullable<T[K1]>,
+    K3 extends keyof NonNullable<NonNullable<T[K1]>[K2]>,
+    K4 extends keyof NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>,
+    K5 extends keyof NonNullable<
+      NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]
+    >,
+    K6 extends keyof NonNullable<
+      NonNullable<NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]>[K5]
+    >,
+    K7 extends keyof NonNullable<
+      NonNullable<
+        NonNullable<
+          NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]
+        >[K5]
+      >[K6]
+    >,
+    K8 extends keyof NonNullable<
+      NonNullable<
+        NonNullable<
+          NonNullable<
+            NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]
+          >[K5]
+        >[K6]
+      >[K7]
+    >,
   >(
     path: [K1, K2, K3, K4, K5, K6, K7, K8],
-    value: SetValue<T, T[K1][K2][K3][K4][K5][K6][K7][K8]>,
+    value: SetValue<
+      T,
+      NonNullable<
+        NonNullable<
+          NonNullable<
+            NonNullable<
+              NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]
+            >[K5]
+          >[K6]
+        >[K7]
+      >[K8]
+    >,
   ): this;
   public set<
     K1 extends keyof T,
-    K2 extends keyof T[K1],
-    K3 extends keyof T[K1][K2],
-    K4 extends keyof T[K1][K2][K3],
-    K5 extends keyof T[K1][K2][K3][K4],
-    K6 extends keyof T[K1][K2][K3][K4][K5],
-    K7 extends keyof T[K1][K2][K3][K4][K5][K6],
-    K8 extends keyof T[K1][K2][K3][K4][K5][K6][K7],
+    K2 extends keyof NonNullable<T[K1]>,
+    K3 extends keyof NonNullable<NonNullable<T[K1]>[K2]>,
+    K4 extends keyof NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>,
+    K5 extends keyof NonNullable<
+      NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]
+    >,
+    K6 extends keyof NonNullable<
+      NonNullable<NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]>[K5]
+    >,
+    K7 extends keyof NonNullable<
+      NonNullable<
+        NonNullable<
+          NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]
+        >[K5]
+      >[K6]
+    >,
+    K8 extends keyof NonNullable<
+      NonNullable<
+        NonNullable<
+          NonNullable<
+            NonNullable<NonNullable<NonNullable<T[K1]>[K2]>[K3]>[K4]
+          >[K5]
+        >[K6]
+      >[K7]
+    >,
   >(
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
     value: SetValue<T, unknown>,
