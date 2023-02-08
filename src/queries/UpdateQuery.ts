@@ -241,7 +241,15 @@ export default class UpdateQuery<T extends K, K extends Item> extends Query<
     path: K1 | [K1, K2?, K3?, K4?, K5?, K6?, K7?, K8?, ...(string | number)[]],
     value: SetValue<T, unknown>,
   ): this {
-    this.update.set(path as [K1, K2, K3, K4, K5, K6, K7, K8], value as never);
+    if (value !== undefined) {
+      this.update.set(path as [K1, K2, K3, K4, K5, K6, K7, K8], value as never);
+    } else {
+      if (!Array.isArray(path)) {
+        path = [path];
+      }
+
+      this.update.remove(...(path as [K1, K2, K3, K4, K5, K6, K7, K8]));
+    }
     return this;
   }
 
