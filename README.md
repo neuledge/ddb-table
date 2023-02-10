@@ -46,6 +46,13 @@ await table
 - **Query & Scan Indexes** - Complete support for global or local indexes.
 - **Pure JavaScript** - Also works without TypeScript.
 
+### Sponsored Us!
+
+If you like this project, please consider sponsoring us to help us continue to maintain and improve
+this project.
+
+❤️ [Github Sponsorship](https://github.com/sponsors/neuledge)
+
 <br>
 
 ## Install
