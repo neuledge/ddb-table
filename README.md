@@ -21,6 +21,7 @@
   <a href="LICENSE">
     <img src="https://img.shields.io/npm/l/ddb-table.svg" alt="License">
   </a>
+  <a href="https://human0.ai/oss/neuledge-ddb-table/badge"><img src="https://human0.ai/oss/badge.svg" alt="Maintained by human0"></a>
 </p>
 <br>
 
@@ -37,6 +38,12 @@ await table
   .condition((cond) => cond.eq('fullName', 'Johnny Doe'))
   .exec();
 ```
+
+<p align="center">
+  <a href="https://human0.ai/oss/neuledge-ddb-table/banner">
+    <img src="https://human0.ai/oss/banner.svg" alt="Maintained by human0">
+  </a>
+</p>
 
 ### Main Features
 
